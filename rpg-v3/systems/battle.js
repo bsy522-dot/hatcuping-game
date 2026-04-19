@@ -41,7 +41,7 @@
       return mult;
     },
 
-    // 데미지 계산
+    // 데미지 계산 (포켓몬식: 레벨 + 능력치비 기반, 3~6턴 승부)
     calcDamage: function(attacker, defender, skill){
       skill = skill || {power:40, type:attacker.type && attacker.type[0], special:false};
       var isSpecial = !!skill.special;
@@ -50,9 +50,12 @@
       var defStat = isSpecial ? (defender.spDef||defender.stats&&defender.stats.spDef||50)
                               : (defender.def||defender.stats&&defender.stats.def||50);
       var power = skill.power || 40;
-      var base = Math.max(1, atkStat + power - Math.floor(defStat*0.4));
-      var rng = Math.floor(Math.random()*5); // 0~4
-      var dmg = base + rng;
+      var lv = attacker.lv || 5;
+      var lvMod = (2*lv/5 + 2);                            // Lv5→4, Lv10→6, Lv20→10
+      var ratio = atkStat / Math.max(20, defStat + 20);    // 0.7~1.3 근방
+      var base = Math.max(1, Math.floor((lvMod * power * ratio) / 10) + 1);
+      var rng = 0.85 + Math.random()*0.15;
+      var dmg = Math.floor(base * rng);
 
       // 타입 상성
       var typeMult = B.applyTypeMatchup(skill.type, defender.type);

@@ -114,7 +114,31 @@ function genTiles(){
     [8,'#C8B6E2',null],
     [9,'#9988AA',null],
     [10,'#8B6914',c=>{c.fillStyle='#FFD700';c.beginPath();c.arc(T/2,T/2,8,0,Math.PI*2);c.fill()}],
-    [11,'#C8B6E2',c=>{c.fillStyle='#FF6B9D';c.beginPath();c.arc(T/2,T/2,10,0,Math.PI*2);c.fill()}],
+    [11,'#E1D5FF',c=>{
+      // 포털/문 타일
+      c.fillStyle='#5D2C7A';
+      c.beginPath();
+      c.moveTo(8, T-4);
+      c.lineTo(8, 16);
+      c.arc(T/2, 16, T/2-8, Math.PI, 0, false);
+      c.lineTo(T-8, T-4);
+      c.closePath(); c.fill();
+      // 내부 빛
+      const g=c.createLinearGradient(0,10,0,T);
+      g.addColorStop(0,'#FFD54F'); g.addColorStop(1,'#FF6B9D');
+      c.fillStyle=g;
+      c.beginPath();
+      c.moveTo(12, T-6);
+      c.lineTo(12, 18);
+      c.arc(T/2, 18, T/2-12, Math.PI, 0, false);
+      c.lineTo(T-12, T-6);
+      c.closePath(); c.fill();
+      // 화살표
+      c.fillStyle='#fff';
+      c.font='bold 18px sans-serif';
+      c.textAlign='center'; c.textBaseline='middle';
+      c.fillText('↑', T/2, T/2+4);
+    }],
     [12,'#6EB844',c=>{c.fillStyle='#5A9E3A';for(let i=0;i<6;i++){const x=rng(2,T-6);c.fillRect(x,T-rng(12,22),2,rng(12,22))}}],
   ];
   tiles.forEach(([id,bg,fn])=>{const cv=document.createElement('canvas');cv.width=T;cv.height=T;const c=cv.getContext('2d');c.fillStyle=bg;c.fillRect(0,0,T,T);if(fn)fn(c);tileCanvas[id]=cv});
@@ -266,6 +290,25 @@ function drawMap(){
     const tc = tileCanvas[m.tiles[y]?.[x]||0];
     if(tc) X.drawImage(tc,sx,sy);
   }
+  // 워프 목적지 간판
+  (m.warps||[]).forEach(w=>{
+    const sx=w.x*T-camX, sy=w.y*T-camY;
+    if(sx<-T||sx>W||sy<-T||sy>H) return;
+    const dest = window.MAPS?.[w.to||w.map];
+    const label = dest?.name || (w.to||w.map||'???');
+    // 간판 아이콘 (탑 상단)
+    const bob = Math.sin(frameT*0.1)*2;
+    // 표지판 기둥
+    X.fillStyle='#8B6914';
+    X.fillRect(sx+T/2-2, sy-14+bob, 4, 14);
+    // 화살표+텍스트 라벨
+    X.font=FN(11); const tw = X.measureText('→ '+label).width+10;
+    X.fillStyle='rgba(42,21,64,0.92)';
+    rr(X,sx+T/2-tw/2, sy-32+bob, tw, 16, 4, 'rgba(42,21,64,0.92)','#FFD54F');
+    X.fillStyle='#FFD54F'; X.textAlign='center'; X.textBaseline='middle';
+    X.fillText('→ '+label, sx+T/2, sy-24+bob);
+    X.textBaseline='alphabetic';
+  });
   // NPCs (스프라이트 매핑) - 정확한 캐릭터만 매핑
   const NPC_SPRITE = {
     '리암 왕자':'liam', '리암':'liam',
@@ -388,31 +431,68 @@ function doAttack(skill){
   (b.log||[]).slice(-3).forEach(l=>window.BattleUI?.addLog?.(l));
 }
 
+function scaleMonToLevel(mon, lv){
+  if(!mon) return;
+  mon.lv = lv;
+  const bs = mon.stats || mon.dex?.baseStats || {};
+  const f = 1 + Math.max(0, lv-5) * 0.12;
+  const scale = k => Math.max(1, Math.floor((bs[k]||50) * f));
+  mon.maxHp = scale('hp'); mon.hp = mon.maxHp;
+  mon.atk = scale('atk'); mon.def = scale('def');
+  mon.spAtk = scale('spAtk'); mon.spDef = scale('spDef');
+  mon.spd = scale('spd');
+}
 function triggerWildBattle(map){
   if(!STATE.party.length){
-    // 파티 없으면 튜토리얼 하츄핑 지급
     const h = makeChar('하츄핑');
-    if(h) STATE.party.push(h);
+    if(h){ scaleMonToLevel(h, 5); STATE.party.push(h); }
   }
   const enc = map.encounters||['하츄핑'];
   const wild = makeChar(enc[rng(0,enc.length-1)]);
   if(!wild) return;
-  wild.lv = rng(3,7);
+  const playerLv = STATE.party[0]?.lv || 5;
+  scaleMonToLevel(wild, Math.max(2, playerLv + rng(-2,1)));
   AM.battleStart();
   STATE.scr = 'battle';
   window.Battle?.start(STATE.party[0], wild, {
     wild: true,
     onVictory: ()=>{
       AM.victory();
-      STATE.party[0].xp += 20;
-      if(STATE.party[0].xp >= STATE.party[0].lv*10){
-        STATE.party[0].lv++; STATE.party[0].xp=0; AM.levelUp();
-        window.Evolution?.check(STATE.party[0]);
+      const p = STATE.party[0];
+      const xpGain = 15 + wild.lv*3;
+      p.xp = (p.xp||0) + xpGain;
+      let leveledUp = false, evolved = null;
+      while(p.xp >= p.lv*10){
+        p.xp -= p.lv*10;
+        p.lv++; leveledUp = true;
+        // HP/atk/def 레벨업 성장
+        p.maxHp += 3; p.hp = p.maxHp;
+        p.atk = (p.atk||50) + 2; p.def = (p.def||50) + 2;
+        const ev = window.Evolution?.check?.(p);
+        if(ev) evolved = ev;
       }
+      if(leveledUp) AM.levelUp();
       STATE.pokedex.seen[wild.id]=true;
-      STATE.scr='map';
+      STATE.battleResult = {
+        kind:'win', enemy:wild.name, xp:xpGain,
+        leveledUp, newLv:p.lv, evolved,
+        onClose:()=>{}
+      };
+      setTimeout(()=>{ STATE.scr='battle_result'; }, 500);
     },
-    onDefeat: ()=>{ STATE.scr='map'; STATE.party.forEach(p=>p.hp=p.maxHp); }
+    onDefeat: ()=>{
+      STATE.battleResult = {
+        kind:'lose', enemy:wild.name,
+        onClose:()=>{
+          // 정신 차리면 마을로 이동 + 전체 회복
+          STATE.party.forEach(p=>{ p.hp=p.maxHp; p.status=null; });
+          STATE.currentMap = 'heart_town';
+          const m = window.MAPS.heart_town;
+          STATE.playerPos = {x:m?.startX||7, y:m?.startY||10};
+        }
+      };
+      setTimeout(()=>{ STATE.scr='battle_result'; }, 500);
+    }
   });
 }
 const BATTLE_SPRITE = {
@@ -500,6 +580,51 @@ function drawBattle(){
     const btns=[['싸우기',20,H-80],['티니핑',W/2+10,H-80],['가방',20,H-40],['도망',W/2+10,H-40]];
     btns.forEach(([t,x,y])=>{rr(X,x,y,W/2-30,30,6,'#FF6B9D');X.fillStyle='#fff';X.textAlign='center';X.fillText(t,x+(W/2-30)/2,y+20)});
   }
+}
+
+// ===== BATTLE RESULT POPUP =====
+function drawBattleResult(){
+  // 전투 배경 유지 (살짝 어둡게)
+  const b = window.Battle?.state;
+  if(b){
+    // 기존 전투 씬 그대로 그려두고 그 위에 팝업
+    drawBattle();
+  } else {
+    X.fillStyle='#1a0a2e'; X.fillRect(0,0,W,H);
+  }
+  X.fillStyle='rgba(10,5,21,0.75)'; X.fillRect(0,0,W,H);
+  const r = STATE.battleResult || {};
+  const bw = 340, bh = 280;
+  const bx = (W-bw)/2, by = (H-bh)/2;
+  // 창
+  rr(X,bx,by,bw,bh,16,'#fff', r.kind==='win'?'#FFD54F':'#7A5C9F');
+  // 제목
+  X.textAlign='center';
+  X.fillStyle = r.kind==='win' ? '#FF6B9D' : '#5D2C7A';
+  X.font=FN(22);
+  X.fillText(r.kind==='win'?'🎉 승리!':'💔 쓰러졌다...', W/2, by+40);
+  // 본문
+  X.fillStyle='#2a1540'; X.font=FN(15);
+  const lines = [];
+  if(r.kind==='win'){
+    lines.push('야생 '+(r.enemy||'?')+' 쓰러뜨림!');
+    lines.push('경험치 +'+(r.xp||0));
+    if(r.leveledUp){ lines.push('💫 레벨업 → Lv.'+r.newLv+' !'); }
+    if(r.evolved){ lines.push('✨ '+r.evolved+' 진화!'); }
+    lines.push('');
+    lines.push('도감에 기록되었다.');
+  } else {
+    lines.push((r.enemy||'야생')+'에게 졌다...');
+    lines.push('');
+    lines.push('정신을 차려보니');
+    lines.push('하트마을이었다.');
+    lines.push('(파티 전원 회복)');
+  }
+  lines.forEach((ln,i)=>X.fillText(ln, W/2, by+80+i*26));
+  // 진행 안내
+  const blink = (Math.floor(frameT/20)%2)===0;
+  X.fillStyle = blink ? '#FF6B9D' : '#aaa';
+  X.font=FN(13); X.fillText('▼ 탭하여 계속', W/2, by+bh-20);
 }
 
 // ===== STORY SCENE RENDER =====
@@ -644,14 +769,18 @@ function onDown(e){
   if(STATE.scr==='battle'){
     const b = window.Battle?.state;
     if(!b) return;
-    // BattleUI 히트 영역 먼저 체크
+    // 전투가 끝났으면 결과창으로
+    if(!b.active){ STATE.scr='battle_result'; return; }
+    // BattleUI 히트 영역만 활성화 (빈 탭은 무시)
     const hit = window.BattleUI?.handleInput?.(p.x,p.y);
-    if(hit){
-      handleBattleCommand(hit.kind, hit.id);
-      return;
-    }
-    // 폴백: 빈 영역 탭 = 공격
-    handleBattleCommand('command','fight');
+    if(hit){ handleBattleCommand(hit.kind, hit.id); }
+    return;
+  }
+  if(STATE.scr==='battle_result'){
+    // 탭하면 맵 복귀
+    if(STATE.battleResult?.onClose){ STATE.battleResult.onClose(); }
+    STATE.battleResult = null;
+    STATE.scr = 'map';
     return;
   }
   if(STATE.scr==='map'){
@@ -714,18 +843,17 @@ window.addEventListener('keydown',e=>{
     return;
   }
   if(STATE.scr==='battle'){
+    if(k==='Enter'||k===' ' || k==='z' || k==='Z'){e.preventDefault();
+      handleBattleCommand('command','fight');
+    } else if(k==='Escape' || k==='x' || k==='X'){e.preventDefault();
+      window.BattleUI?.setMode?.('commands');
+    }
+    return;
+  }
+  if(STATE.scr==='battle_result'){
     if(k==='Enter'||k===' '){e.preventDefault();
-      const b=window.Battle?.state;if(!b)return;
-      AM.damage();
-      const dmg=Math.max(1,b.player.atk-Math.floor(b.enemy.def*0.4));
-      b.enemy.hp-=dmg;b._playerAtkT=frameT+12;b._enemyHurtT=frameT+18;
-      window.Battle.log('⚔ '+b.player.name+' 공격! '+dmg+' 데미지');
-      if(b.enemy.hp<=0){b.active=false;setTimeout(()=>window.Battle.onVictory?.(),600);return}
-      setTimeout(()=>{
-        const edmg=Math.max(1,b.enemy.atk-Math.floor(b.player.def*0.4));
-        b.player.hp-=edmg;window.Battle.log('💢 '+b.enemy.name+' 반격! '+edmg);
-        if(b.player.hp<=0){b.active=false;setTimeout(()=>window.Battle.onDefeat?.(),600)}
-      },500);
+      if(STATE.battleResult?.onClose) STATE.battleResult.onClose();
+      STATE.battleResult=null; STATE.scr='map';
     }
     return;
   }
@@ -818,6 +946,7 @@ function render(){
   }
   else if(STATE.scr==='map') drawMap();
   else if(STATE.scr==='battle') drawBattle();
+  else if(STATE.scr==='battle_result') drawBattleResult();
   else if(STATE.scr==='menu'){
     if(window.Menu?.draw) window.Menu.draw(X,W,H,STATE);
     else{
