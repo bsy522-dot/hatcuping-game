@@ -56,8 +56,9 @@
       }
     }),
     npcs:[
-      {id:'queen', name:'여왕님', x:7, y:3, dialog:'하츄핑을 찾아줘...'},
-      {id:'guard', name:'근위병', x:4, y:8, dialog:'금단의 숲으로...'}
+      {id:'queen', name:'여왕님', x:7, y:3, dialog:'로미야, 하츄핑을 찾아줘...'},
+      {id:'liam', name:'리암 왕자', x:4, y:8, dialog:'누나, 내가 도와줄게!'},
+      {id:'guard', name:'근위대장', x:10, y:8, dialog:'공주님, 조심히 다녀오세요.'}
     ],
     warps:[{x:7,y:18, to:'forbidden_forest', tx:7, ty:1}],
     encounters:[], startX:7, startY:10

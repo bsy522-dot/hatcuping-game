@@ -238,7 +238,7 @@ function updateMap(){
   moveT=10;
   if(ny<0||ny>=m.h||nx<0||nx>=m.w) return;
   const tile = m.tiles[ny]?.[nx];
-  const WALK={0:1,1:1,5:1,6:1,8:1,10:1,11:1,12:1};
+  const WALK={0:1,1:1,5:1,6:1,7:1,8:1,9:1,10:1,11:1,12:1};
   if(!WALK[tile]) return;
   STATE.playerPos.x=nx; STATE.playerPos.y=ny;
   // 워프
@@ -265,12 +265,18 @@ function drawMap(){
     const tc = tileCanvas[m.tiles[y]?.[x]||0];
     if(tc) X.drawImage(tc,sx,sy);
   }
-  // NPCs (스프라이트 매핑)
+  // NPCs (스프라이트 매핑) - 정확한 캐릭터만 매핑
   const NPC_SPRITE = {
-    '여왕님':'rs', '왕비':'rs', '근위병':'liam', '몬쥬박사':'monju', '몬쥬':'monju',
+    '리암 왕자':'liam', '리암':'liam',
+    '몬쥬박사':'monju', '몬쥬':'monju', '엘더 박사':'monju',
     '바로핑':'ba', '차차핑':'ch', '꽁꽁핑':'kk', '부끄핑':'bk',
     '하츄핑':'hs', '라라핑':'la', '트러핑':'ts', '스틱핑':'stk',
-    '하트킹':'hk', '제니':'bk', '레이븐':'stk'
+    '하트킹':'hk', '레이븐':'stk'
+  };
+  // 스프라이트 없는 NPC는 이모지 라벨 플레이스홀더
+  const NPC_EMOJI = {
+    '여왕님':'👸','왕비':'👸','왕':'🤴','엄마':'👩','근위대장':'⚔️','근위병':'⚔️',
+    '숲의 무당':'🔮','꼬마 트레이너':'🧒','제니':'🖤','샤샤핑':'🍰','포실핑':'🍮','말랑핑':'🍡'
   };
   const bob = Math.sin(frameT*0.12)*2;
   (m.npcs||[]).forEach(n=>{
@@ -282,8 +288,13 @@ function drawMap(){
     if(key && IM[key]){
       X.drawImage(IM[key], sx, sy+bob, T, T);
     } else {
-      X.fillStyle='#FF6B9D'; X.beginPath(); X.arc(sx+T/2, sy+T/2+bob, 14, 0, Math.PI*2); X.fill();
+      // 이모지 플레이스홀더
+      X.fillStyle='#FF6B9D'; X.beginPath(); X.arc(sx+T/2, sy+T/2+bob, 15, 0, Math.PI*2); X.fill();
       X.strokeStyle='#fff'; X.lineWidth=2; X.stroke();
+      const emoji = NPC_EMOJI[n.name] || '✨';
+      X.font=FN(18); X.textAlign='center'; X.textBaseline='middle';
+      X.fillText(emoji, sx+T/2, sy+T/2+bob);
+      X.textBaseline='alphabetic';
     }
     // 이름표
     const nm = n.name||'?';
