@@ -243,9 +243,10 @@ function updateMap(){
   STATE.playerPos.x=nx; STATE.playerPos.y=ny;
   // 워프
   const warp = (m.warps||[]).find(w=>w.x===nx && w.y===ny);
-  if(warp && window.MAPS[warp.map]){
-    STATE.currentMap = warp.map;
-    STATE.playerPos = {x: warp.tx||window.MAPS[warp.map].startX||7, y: warp.ty||window.MAPS[warp.map].startY||10};
+  const warpTo = warp && (warp.to || warp.map);
+  if(warpTo && window.MAPS[warpTo]){
+    STATE.currentMap = warpTo;
+    STATE.playerPos = {x: warp.tx||window.MAPS[warpTo].startX||7, y: warp.ty||window.MAPS[warpTo].startY||10};
     return;
   }
   // 인카운터 (타일 12=큰풀)
