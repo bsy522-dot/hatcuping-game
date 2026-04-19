@@ -340,6 +340,54 @@ function drawTouchPad(){
 }
 
 // ===== BATTLE =====
+function handleBattleCommand(kind, id){
+  const b = window.Battle?.state;
+  if(!b || !b.active) return;
+  if(kind==='nav' && id==='back'){ window.BattleUI?.setMode?.('commands'); return; }
+  if(kind==='command'){
+    if(id==='fight'){
+      // 스킬 UI 있으면 열기, 없으면 바로 공격
+      const skills = b.player.skills;
+      if(skills && skills.length>0 && window.BattleUI){
+        window.BattleUI.setState({skills, mode:'skills'});
+        window.BattleUI.setMode('skills');
+      } else {
+        doAttack(null);
+      }
+      return;
+    }
+    if(id==='run'){ window.Battle.playerAction('run'); setTimeout(()=>{STATE.scr='map'},600); return; }
+    if(id==='bag'){
+      const bag = Object.entries(STATE.items||{}).map(([k,v])=>({id:k,name:k,count:v,icon:'🎁',kind:'heal'}));
+      window.BattleUI?.setState({bagItems:bag, mode:'bag'});
+      window.BattleUI?.setMode('bag');
+      return;
+    }
+    if(id==='party'){ window.BattleUI?.addLog?.('티니핑 교체 (개발중)'); return; }
+  }
+  if(kind==='skill'){
+    const skill = b.player.skills?.[id];
+    doAttack(skill);
+    window.BattleUI?.setMode('commands');
+    return;
+  }
+  if(kind==='item'){
+    window.BattleUI?.addLog?.('아이템 사용!');
+    window.BattleUI?.setMode('commands');
+    return;
+  }
+}
+function doAttack(skill){
+  const b = window.Battle?.state;
+  if(!b) return;
+  AM.damage();
+  b._playerAtkT = frameT + 12;
+  b._enemyHurtT = frameT + 18;
+  window.Battle.playerAction('attack', skill);
+  // 로그 sync (Battle이 이미 log 채움)
+  (b.log||[]).slice(-3).forEach(l=>window.BattleUI?.addLog?.(l));
+}
+
 function triggerWildBattle(map){
   if(!STATE.party.length){
     // 파티 없으면 튜토리얼 하츄핑 지급
@@ -442,9 +490,13 @@ function drawBattle(){
   X.fillStyle='#fff';X.font=FN(12);X.textAlign='left';
   const logs=(b.log||[]).slice(-3);
   logs.forEach((l,i)=>X.fillText(l,20,H-130+i*16));
-  // 커맨드
-  if(window.BattleUI?.drawCommands) window.BattleUI.drawCommands(X,W,H,b);
-  else{
+  // 커맨드 (mode별)
+  if(window.BattleUI){
+    const mode = window.BattleUI.getMode?.() || 'commands';
+    if(mode==='skills') window.BattleUI.drawSkills(X,W,H);
+    else if(mode==='bag') window.BattleUI.drawBag(X,W,H);
+    else window.BattleUI.drawCommands(X,W,H);
+  } else {
     const btns=[['싸우기',20,H-80],['티니핑',W/2+10,H-80],['가방',20,H-40],['도망',W/2+10,H-40]];
     btns.forEach(([t,x,y])=>{rr(X,x,y,W/2-30,30,6,'#FF6B9D');X.fillStyle='#fff';X.textAlign='center';X.fillText(t,x+(W/2-30)/2,y+20)});
   }
@@ -590,28 +642,16 @@ function onDown(e){
     return;
   }
   if(STATE.scr==='battle'){
-    if(window.BattleUI?.handleInput){window.BattleUI.handleInput(p.x,p.y,window.Battle.state);return}
-    // 폴백: 탭하면 아군 공격
     const b = window.Battle?.state;
     if(!b) return;
-    AM.damage();
-    const dmg = Math.max(1, b.player.atk - Math.floor(b.enemy.def*0.4));
-    b.enemy.hp -= dmg;
-    b._playerAtkT = frameT + 12;
-    b._enemyHurtT = frameT + 18;
-    window.Battle.log('⚔ '+b.player.name+' 공격! '+dmg+' 데미지');
-    if(b.enemy.hp<=0){
-      b.active=false; window.Battle.log('✨ '+b.enemy.name+' 쓰러졌다!');
-      setTimeout(()=>window.Battle.onVictory?.(),600);
+    // BattleUI 히트 영역 먼저 체크
+    const hit = window.BattleUI?.handleInput?.(p.x,p.y);
+    if(hit){
+      handleBattleCommand(hit.kind, hit.id);
       return;
     }
-    // 적 턴
-    setTimeout(()=>{
-      const edmg = Math.max(1, b.enemy.atk - Math.floor(b.player.def*0.4));
-      b.player.hp -= edmg;
-      window.Battle.log('💢 '+b.enemy.name+' 반격! '+edmg);
-      if(b.player.hp<=0){b.active=false;setTimeout(()=>window.Battle.onDefeat?.(),600)}
-    }, 500);
+    // 폴백: 빈 영역 탭 = 공격
+    handleBattleCommand('command','fight');
     return;
   }
   if(STATE.scr==='map'){
