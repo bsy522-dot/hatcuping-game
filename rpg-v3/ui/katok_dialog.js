@@ -201,5 +201,9 @@
     ctx.closePath();
   }
 
-  window.KatokDialog = { show, advance, isActive, draw };
+  function _getLastSpeaker(){
+    const last = state.history[state.history.length-1];
+    return last ? last.who : null;
+  }
+  window.KatokDialog = { show, advance, isActive, draw, _getLastSpeaker };
 })();
