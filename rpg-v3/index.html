@@ -440,14 +440,38 @@ function drawBattle(){
 
 // ===== STORY SCENE RENDER =====
 const BG_FOR_LOCATION = {
-  ion_castle:'bg_castle', ion_castle_balcony:'bg_roof',
+  // Act 0
+  ion_castle:'bg_castle', ion_castle_balcony:'bg_roof', ion_castle_grand:'bg_castle',
+  castle_corridor:'bg_corridor',
   forbidden_forest:'bg_forest', forbidden_forest_edge:'bg_forest',
   forbidden_forest_deep:'bg_forest_deep', hatchu_shelter:'bg_forest_dark',
-  heart_town:'bg_plaza', heart_village:'bg_plaza',
-  castle_corridor:'bg_corridor', sparkle_city_gym1:'bg_plaza',
-  emotion_forest:'bg_forest', jewel_forest_entry:'bg_forest',
-  jewel_forest_deep_gym2:'bg_forest_deep', crystal_lake_gym3:'bg_forest',
-  raven_tower_gym5:'bg_forest_dark'
+  // Act 1
+  heart_town:'bg_plaza', heart_village:'bg_plaza', maeum_village:'bg_plaza',
+  emotion_forest:'bg_forest', route_1:'bg_forest',
+  sparkle_city:'bg_plaza', sparkle_city_gym1:'bg_plaza',
+  // Act 2
+  jewel_forest_entry:'bg_forest', jewel_forest:'bg_forest',
+  jewel_forest_gate:'bg_forest', jewel_forest_camp:'bg_forest_deep',
+  jewel_forest_deep_gym2:'bg_forest_deep',
+  crystal_lake:'bg_forest', crystal_lake_gym3:'bg_forest',
+  ice_gym:'bg_forest', fire_gym:'bg_castle', dance_gym:'bg_corridor', sparkle_gym:'bg_plaza',
+  jewel_cave_gym4:'bg_forest_dark', dimension_gate:'bg_castle',
+  emotion_forest_exit:'bg_forest',
+  // Act 3
+  mystic_village:'bg_forest_dark', mystic_outskirts:'bg_forest_dark',
+  raven_tower:'bg_forest_dark', raven_tower_gym5:'bg_forest_dark',
+  forgotten_library:'bg_corridor', jewel_dragon_sanctum:'bg_castle',
+  dragon_shrine:'bg_castle',
+  dimension_end:'bg_forest_dark',
+  // Act 4
+  dessert_town:'bg_plaza', dessert_town_night:'bg_plaza',
+  cake_plaza:'bg_plaza', legend_bakery:'bg_corridor',
+  mirror_dimension:'bg_corridor', mirror_dessert:'bg_corridor', mirror_kitchen:'bg_corridor',
+  sugar_vault:'bg_castle', sugar_vault_gym7:'bg_castle',
+  // Act 5
+  star_plateau:'bg_forest_dark', sour_cliff:'bg_roof',
+  champion_castle_gate:'bg_castle', champion_throne:'bg_castle',
+  champion_road:'bg_forest_dark'
 };
 function drawStoryScene(){
   if(!curAct) return;
@@ -609,6 +633,62 @@ function onDown(e){
 function onUp(e){e.preventDefault();tU=tD=tL=tR=false}
 C.addEventListener('mousedown',onDown);C.addEventListener('mouseup',onUp);
 C.addEventListener('touchstart',onDown,{passive:false});C.addEventListener('touchend',onUp,{passive:false});
+// 키보드 입력 (데스크톱)
+window.addEventListener('keydown',e=>{
+  const k=e.key;
+  if(STATE.scr==='title'){
+    if(k==='Enter'||k===' '){e.preventDefault();onTitleSelect('new')}
+    return;
+  }
+  if(STATE.scr==='story'){
+    if(k==='Enter'||k===' '||k==='ArrowRight'){e.preventDefault();if(window.KatokDialog?.advance)window.KatokDialog.advance();else{sceneIdx++;playScene()}}
+    return;
+  }
+  if(STATE.scr==='map'){
+    if(k==='ArrowUp'||k==='w'||k==='W'){e.preventDefault();tU=true}
+    else if(k==='ArrowDown'||k==='s'||k==='S'){e.preventDefault();tD=true}
+    else if(k==='ArrowLeft'||k==='a'||k==='A'){e.preventDefault();tL=true}
+    else if(k==='ArrowRight'||k==='d'||k==='D'){e.preventDefault();tR=true}
+    else if(k==='Enter'||k===' '||k==='z'||k==='Z'){e.preventDefault();interactNPC()}
+    else if(k==='Escape'||k==='m'||k==='M'){
+      e.preventDefault();
+      STATE.scr='menu';
+      if(window.Menu){
+        const bag=Object.entries(STATE.items||{}).map(([k,v])=>({id:k,name:k,count:v,icon:'🎁'}));
+        window.Menu.setData({party:STATE.party,bag});
+        window.Menu.open('pokedex');
+      }
+    }
+    return;
+  }
+  if(STATE.scr==='battle'){
+    if(k==='Enter'||k===' '){e.preventDefault();
+      const b=window.Battle?.state;if(!b)return;
+      AM.damage();
+      const dmg=Math.max(1,b.player.atk-Math.floor(b.enemy.def*0.4));
+      b.enemy.hp-=dmg;b._playerAtkT=frameT+12;b._enemyHurtT=frameT+18;
+      window.Battle.log('⚔ '+b.player.name+' 공격! '+dmg+' 데미지');
+      if(b.enemy.hp<=0){b.active=false;setTimeout(()=>window.Battle.onVictory?.(),600);return}
+      setTimeout(()=>{
+        const edmg=Math.max(1,b.enemy.atk-Math.floor(b.player.def*0.4));
+        b.player.hp-=edmg;window.Battle.log('💢 '+b.enemy.name+' 반격! '+edmg);
+        if(b.player.hp<=0){b.active=false;setTimeout(()=>window.Battle.onDefeat?.(),600)}
+      },500);
+    }
+    return;
+  }
+  if(STATE.scr==='menu'){
+    if(k==='Escape'||k==='m'||k==='M'){e.preventDefault();if(window.Menu?.close)window.Menu.close();STATE.scr='map'}
+    return;
+  }
+});
+window.addEventListener('keyup',e=>{
+  const k=e.key;
+  if(k==='ArrowUp'||k==='w'||k==='W')tU=false;
+  else if(k==='ArrowDown'||k==='s'||k==='S')tD=false;
+  else if(k==='ArrowLeft'||k==='a'||k==='A')tL=false;
+  else if(k==='ArrowRight'||k==='d'||k==='D')tR=false;
+});
 
 function interactNPC(){
   const m = window.MAPS?.[STATE.currentMap];
