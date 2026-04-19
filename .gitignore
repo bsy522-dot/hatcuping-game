@@ -1,1 +1,5 @@
 node_modules/
+rpg-v3/_shots/
+rpg-v3/_test_*.js
+_deleted_files/
+.claude_session.json

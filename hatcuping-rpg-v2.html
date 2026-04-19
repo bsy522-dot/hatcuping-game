@@ -699,8 +699,8 @@ function update(){
       miniGame.heartAnim=miniGame.heartAnim.filter(h=>{h.y-=1.5;h.t--;return h.t>0});
       if(miniGame.shakeT>0)miniGame.shakeT--;
       if(miniGame.successT>0){miniGame.successT--;
-        if(miniGame.successT<=0){AM.captureOk();bag.hearts+=5;
-          setTimeout(()=>{const cb=miniGame.cb;miniGame=null;scr='map';if(cb)cb()},800)}}
+        if(miniGame.successT<=0){miniGame.successT=-1;AM.captureOk();bag.hearts+=5;
+          setTimeout(()=>{const cb=miniGame?miniGame.cb:null;miniGame=null;scr='map';if(cb)cb()},800)}}
     }
     if(miniGame&&miniGame.type==='busdodge'){
       miniGame.timer++;miniGame.roadY=(miniGame.roadY+miniGame.speed)%40;
