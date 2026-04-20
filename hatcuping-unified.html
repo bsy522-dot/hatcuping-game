@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0515">
+<title>사랑의 하츄핑 UNIFIED v4 ✨</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#0a0515;display:flex;justify-content:center;align-items:center;overscroll-behavior:none;position:fixed}
+canvas{display:block;max-width:100vw;max-height:100vh;touch-action:none;background:#0a0515}
+#landscape-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,5,21,0.97);z-index:9999;justify-content:center;align-items:center;flex-direction:column;color:#FF6B9D;font-family:"Jua",sans-serif;font-size:22px;text-align:center}
+@media screen and (orientation:landscape) and (max-height:500px){#landscape-overlay{display:flex!important}canvas{display:none!important}}
+</style>
+</head><body>
+<div id="landscape-overlay">
+  <div style="font-size:60px;margin-bottom:16px">📱</div>
+  <div>세로로 돌려주세요!</div>
+  <div style="font-size:14px;color:#ccc;margin-top:12px">사랑의 하츄핑 UNIFIED v4</div>
+</div>
+<canvas id="c" role="application" aria-label="사랑의 하츄핑 UNIFIED v4"></canvas>
+
+<!-- ============================================================
+     ASSETS (부모 폴더 재사용 - rpg-v3와 동일 패턴)
+     ============================================================ -->
+<script src="sprites_data.js"></script>
+<script src="env_backgrounds.js"></script>
+
+<!-- ============================================================
+     UNIFIED v4 - CORE LAYER (로드 순서 중요)
+     ============================================================ -->
+<script src="unified/core/state.js"></script>
+<script src="unified/ui/canvas.js"></script>
+<script src="unified/core/save.js"></script>
+<script src="unified/core/mode_dispatcher.js"></script>
+
+<!-- ============================================================
+     UNIFIED v4 - ENGINES (다른 에이전트가 나중에 추가)
+     각 파일은 window.XxxEngine 글로벌을 정의하며,
+     Dispatcher가 STATE.mode를 보고 알아서 분기한다.
+     없으면 조용히 무시됨 (Dispatcher 가드).
+     ============================================================ -->
+<script src="unified/engines/engine_v2scene.js"></script>
+<script src="unified/engines/engine_dodge.js"></script>
+<script src="unified/engines/engine_platformer.js"></script>
+<script src="unified/engines/engine_run.js"></script>
+<script src="unified/engines/engine_v3map.js"></script>
+<script src="unified/engines/engine_v3battle.js"></script>
+
+<!-- 데이터 레이어 -->
+<script src="unified/data/romi_stats.js"></script>
+<script src="unified/data/partner_effects.js"></script>
+
+<!-- ============================================================
+     UNIFIED v4 - STORY LAYER (다른 에이전트)
+     ============================================================ -->
+<script src="unified/story/act1_morning.js"></script>
+<script src="unified/story/act1_5_snow.js"></script>
+<script src="unified/story/act1_post_dodge.js"></script>
+<script src="unified/story/act1b_book.js"></script>
+<script src="unified/story/act2_escape.js"></script>
+<script src="unified/story/act2_post.js"></script>
+<script src="unified/story/act3_bus.js"></script>
+<script src="unified/story/act4_village.js"></script>
+
+<!-- 스토리 라우터 (모든 Act 로드 후) -->
+<script src="unified/core/story_router.js"></script>
+
+<script>
+'use strict';
+
+// ============================================================
+// 메인 부트스트랩
+// - Canvas/DPR은 UCanvas가 자동 처리
+// - STATE.mode는 state.js에서 'v2_scene'으로 초기화됨
+// - Dispatcher가 현재 엔진에게 update/render 위임
+// ============================================================
+(function(){
+
+  // ----- 폰트 로드 버퍼 -----
+  let fontReady = false;
+  setTimeout(()=>{ fontReady = true; }, 1200);
+  window.FN = function(size){
+    return size + 'px ' + (fontReady ? '"Jua",' : '') + 'sans-serif';
+  };
+
+  // ----- 이미지 프리로더 (rpg-v3 패턴 그대로) -----
+  const IM = {};
+  let iLoaded = 0, iTotal = 0;
+  function lI(name, src){
+    if(!src) return;
+    iTotal++;
+    const i = new Image();
+    i.onload  = ()=>{ iLoaded++; IM[name] = i; };
+    i.onerror = ()=>{ iLoaded++; };
+    i.src = src;
+  }
+  // 스프라이트 (sprites_data.js에 정의된 글로벌 base64/URL들)
+  lI('rs', typeof ROMI_S   !== 'undefined' ? ROMI_S   : '');
+  lI('rp', typeof ROMI_P   !== 'undefined' ? ROMI_P   : '');
+  lI('hs', typeof HATCHU_S !== 'undefined' ? HATCHU_S : '');
+  lI('hp', typeof HATCHU_P !== 'undefined' ? HATCHU_P : '');
+  lI('ba', typeof BARO_S   !== 'undefined' ? BARO_S   : '');
+  lI('ch', typeof CHACHA_S !== 'undefined' ? CHACHA_S : '');
+  lI('kk', typeof KKONG_S  !== 'undefined' ? KKONG_S  : '');
+  lI('bk', typeof BUKKU_S  !== 'undefined' ? BUKKU_S  : '');
+  lI('ts', typeof TRUP_S   !== 'undefined' ? TRUP_S   : '');
+  lI('la', typeof LALA_S   !== 'undefined' ? LALA_S   : '');
+  lI('hk', typeof HK_F     !== 'undefined' ? HK_F     : '');
+  lI('stk',typeof STICK_S  !== 'undefined' ? STICK_S  : '');
+  lI('liam', typeof LIAM_S !== 'undefined' ? LIAM_S   : '');
+  lI('monju',typeof MONJU_S!== 'undefined' ? MONJU_S  : '');
+  // 배경 (env_backgrounds.js)
+  lI('bg_castle',       typeof BG_CASTLE_INTERIOR !== 'undefined' ? BG_CASTLE_INTERIOR : '');
+  lI('bg_corridor',     typeof BG_CASTLE_CORRIDOR !== 'undefined' ? BG_CASTLE_CORRIDOR : '');
+  lI('bg_plaza',        typeof BG_FOUNTAIN_PLAZA  !== 'undefined' ? BG_FOUNTAIN_PLAZA  : '');
+  lI('bg_roof',         typeof BG_CASTLE_ROOF     !== 'undefined' ? BG_CASTLE_ROOF     : '');
+  lI('bg_forest',       typeof BG_FOREST_BRIGHT   !== 'undefined' ? BG_FOREST_BRIGHT   : '');
+  lI('bg_forest_deep',  typeof BG_FOREST_DEEP     !== 'undefined' ? BG_FOREST_DEEP     : '');
+  lI('bg_forest_dark',  typeof BG_FOREST_DARK     !== 'undefined' ? BG_FOREST_DARK     : '');
+  window.IM = IM; // 엔진에서 공유
+
+  // ----- 입력 핸들러 → Dispatcher로 라우팅 -----
+  function bindInput(){
+    const c = window.UCanvas?.c;
+    if(!c) return;
+    function route(e, kind){
+      e.preventDefault();
+      const t = (e.touches && e.touches[0]) || e;
+      if(typeof t.clientX !== 'number') return;
+      const p = window.UCanvas.toLogical(t.clientX, t.clientY);
+      window.Dispatcher?.handleInput?.(p.x, p.y, kind);
+    }
+    c.addEventListener('mousedown',  e=>route(e,'down'));
+    c.addEventListener('mouseup',    e=>route(e,'up'));
+    c.addEventListener('mousemove',  e=>route(e,'move'));
+    c.addEventListener('touchstart', e=>route(e,'down'), {passive:false});
+    c.addEventListener('touchend',   e=>route(e,'up'),   {passive:false});
+    c.addEventListener('touchmove',  e=>route(e,'move'), {passive:false});
+    // 키보드는 엔진에서 직접 받을 수 있도록 현재 모드 이름과 함께 전달
+    window.addEventListener('keydown', e=>{
+      window.Dispatcher?.handleInput?.(0, 0, { type:'key', key:e.key, down:true, evt:e });
+    });
+    window.addEventListener('keyup', e=>{
+      window.Dispatcher?.handleInput?.(0, 0, { type:'key', key:e.key, down:false, evt:e });
+    });
+  }
+
+  // ----- 게임 루프 -----
+  let frameT = 0;
+  function tick(){
+    frameT++;
+    window.FRAME_T = frameT;
+    try{
+      window.Dispatcher?.update?.();
+    }catch(e){ console.error('[main] update err:', e); }
+
+    const UC = window.UCanvas;
+    if(UC && UC.ctx){
+      // 클리어
+      UC.ctx.fillStyle = '#0a0515';
+      UC.ctx.fillRect(0, 0, UC.W, UC.H);
+      try{
+        window.Dispatcher?.render?.(UC.ctx, UC.W, UC.H);
+      }catch(e){ console.error('[main] render err:', e); }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // ----- 로딩 화면 -----
+  function drawLoading(){
+    const UC = window.UCanvas;
+    if(!UC || !UC.ctx) return;
+    const X = UC.ctx, W = UC.W, H = UC.H;
+    X.fillStyle = '#0a0515'; X.fillRect(0,0,W,H);
+    X.fillStyle = '#FF6B9D'; X.font = 'bold 24px "Jua", sans-serif';
+    X.textAlign = 'center';
+    X.fillText('사랑의 하츄핑', W/2, H/2 - 60);
+    X.fillStyle = '#FFD54F'; X.font = 'bold 18px "Jua", sans-serif';
+    X.fillText('UNIFIED v4 ✨', W/2, H/2 - 30);
+    X.fillStyle = '#fff'; X.font = '14px "Jua", sans-serif';
+    X.fillText('Loading... ' + iLoaded + ' / ' + iTotal, W/2, H/2 + 10);
+    // 프로그레스 바
+    const pw = W * 0.55, px = (W - pw)/2, py = H/2 + 30;
+    X.fillStyle = 'rgba(255,255,255,0.12)';
+    X.fillRect(px, py, pw, 6);
+    const pct = iTotal > 0 ? (iLoaded / iTotal) : 0;
+    X.fillStyle = '#FF6B9D';
+    X.fillRect(px, py, pw * pct, 6);
+  }
+
+  function bootLoop(){
+    if(iTotal > 0 && iLoaded < iTotal){
+      drawLoading();
+      requestAnimationFrame(bootLoop);
+      return;
+    }
+    console.log('[UNIFIED v4] 에셋 로드 완료. 게임 루프 시작.');
+    bindInput();
+    tick();
+    // Act1 자동 시작
+    setTimeout(()=>{
+      if(window.StoryRouter){
+        window.StoryRouter.play('act1_morning');
+      } else {
+        console.error('[UNIFIED v4] StoryRouter 미로드');
+      }
+    }, 100);
+  }
+
+  // DOMContentLoaded 이후에만 시작
+  function start(){
+    if(!window.UCanvas){
+      console.error('[UNIFIED v4] UCanvas 미정의! 스크립트 로드 실패.');
+      return;
+    }
+    // 최초 프레임에는 반드시 로딩 표시를 한 번 그리기 (까만 화면 방지)
+    drawLoading();
+    requestAnimationFrame(bootLoop);
+    console.log('[UNIFIED v4] 부팅 시작. mode=', window.STATE.mode,
+                'Act=', window.STATE.act,
+                'assets total=', iTotal);
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+})();
+</script>
+</body></html>
