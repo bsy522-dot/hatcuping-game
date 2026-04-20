@@ -136,51 +136,71 @@
     ]
   }];
 
-  // ===== 호감도 빌드업 1: 쿠키 =====
-  const AFFECTION_COOKIE = [{
-    id:'act5_affection_cookie', location:'forbidden_forest_v4', bg:'bg_forest_dark',
+  // ===== 호감도 빌드업 1: 선택 - 다가가는 방법 =====
+  // rpg-v3 Act0와 통일: choices로 호감도 누적
+  const AFFECTION_APPROACH = [{
+    id:'act5_affection_approach', location:'forbidden_forest_v4', bg:'bg_forest_dark',
     actors:[A_ROMI, A_HATCHU],
+    affectionKey:'act5_affection',
     dialog:[
-      { who:'narration', text:'로미는 주머니에서\n따뜻한 쿠키 하나를 꺼냈다.' },
-      { who:'romi', text:'배고프지…? 이거, 먹어도 돼.\n꽁꽁핑이 아침에 몰래 챙겨줬어.' },
-      { who:'narration', text:'살짝 — 꽃덤불이 흔들린다.\n분홍빛 눈동자가 조심스레 내다본다.' },
+      { who:'narration', text:'하츄핑이 꽃덤불 뒤로 숨었다.\n놀라게 하지 않으려면 어떻게 해야 할까?' },
+      { who:'hatchu', text:'(덜덜)\n…핑…' }
+    ],
+    choicePrompt:'어떻게 다가갈까?',
+    choices:[
+      { text:'🍪 쿠키를 내민다', affection:3, flag:'cookie' },
+      { text:'🎵 자장가를 부른다', affection:2, flag:'lullaby' },
+      { text:'👋 조용히 기다린다', affection:1, flag:'wait' }
+    ]
+  }];
+
+  // ===== 호감도 빌드업 2: 선택에 따른 반응 =====
+  const AFFECTION_REACT = [{
+    id:'act5_affection_react', location:'forbidden_forest_v4', bg:'bg_forest_dark',
+    actors:[A_ROMI, A_HATCHU],
+    affectionKey:'act5_affection',
+    dialog:[
+      { who:'narration', text:'하츄핑이 고개를 빼꼼 내밀었다.\n분홍빛 눈동자가 로미를 바라본다.' },
       { who:'hatchu', text:'…핑…?' },
-      { who:'romi', text:'응. 너 먹으라고.\n천천히 나와도 돼.' },
-      { who:'narration', text:'하츄핑이 발을 들어\n한 걸음, 앞으로 내디뎠다.' },
-      { who:'hatchu', text:'(쿠키를 쥐고)\n…암… 냠…' },
-      { who:'romi', text:'(웃음)\n맛있지?' }
+      { who:'romi', text:'그래, 이쪽으로 와.\n나쁜 사람 아니야.' },
+      { who:'hatchu', text:'(한 걸음 다가옴)\n…핑…!' }
+    ],
+    choicePrompt:'이제 무엇을 할까?',
+    choices:[
+      { text:'🤗 살포시 안아준다', affection:3, flag:'hug' },
+      { text:'💬 말을 걸어본다', affection:2, flag:'talk' },
+      { text:'🌸 꽃을 건네준다', affection:2, flag:'flower' }
     ]
   }];
 
-  // ===== 호감도 빌드업 2: 자장가 =====
-  const AFFECTION_LULLABY = [{
-    id:'act5_affection_lullaby', location:'forbidden_forest_v4', bg:'bg_forest_dark',
-    actors:[A_ROMI, A_HATCHU],
-    dialog:[
-      { who:'narration', text:'쿠키를 다 먹은 하츄핑.\n그래도 아직 로미의 품엔 오지 않는다.' },
-      { who:'romi', text:'…너도 혼자였지?\n외로웠지, 많이.' },
-      { who:'hatchu', text:'…핑…' },
-      { who:'romi', text:'(작게 노래를 부른다)\n♪ 반짝반짝 작은 별…' },
-      { who:'romi', text:'♪ 아름답게 비치네…\n♪ 서쪽 하늘에서도, 동쪽 하늘에서도…' },
-      { who:'narration', text:'하츄핑의 어깨가\n스르르 내려간다.' },
-      { who:'hatchu', text:'(눈을 감으며)\n…따뜻해…' },
-      { who:'romi', text:'응. 이제 무서워하지 않아도 돼.' }
-    ]
-  }];
-
-  // ===== 호감도 빌드업 3: 이름 부르기 + 짝꿍 선언 =====
+  // ===== 호감도 빌드업 3: 짝꿍 선언 =====
   const AFFECTION_NAMECALL = [{
     id:'act5_affection_namecall', location:'forbidden_forest_v4', bg:'bg_forest_dark',
     actors:[A_ROMI, A_HATCHU],
+    affectionKey:'act5_affection',
     dialog:[
       { who:'romi', text:'있잖아.\n나 너를 찾아서 여기까지 왔어.' },
       { who:'romi', text:'꿈속에서, 책 속에서,\n매일 밤 네가 날 불렀어.' },
       { who:'romi', text:'(심장에 손을 얹으며)\n…너 내 짝꿍이지?' },
       { who:'hatchu', text:'(눈을 크게 뜨고)\n핑…!' },
-      { who:'romi', text:'네 이름을 말해 줄래?\n내가 꼭 불러줄게.' },
-      { who:'narration', text:'하츄핑의 몸에서\n분홍빛이 새어 나오기 시작한다.' },
+      { who:'narration', text:'하츄핑의 몸에서\n분홍빛이 새어 나오기 시작한다.' }
+    ],
+    choicePrompt:'너의 이름을 물어본다면?',
+    choices:[
+      { text:'💕 이름을 물어본다', affection:4, flag:'askname' },
+      { text:'✨ 내 이름을 알려준다', affection:3, flag:'tellname' },
+      { text:'🎶 그냥 꼭 안아준다', affection:2, flag:'hugsilent' }
+    ]
+  }];
+
+  // ===== 이름 공개 =====
+  const NAME_REVEAL = [{
+    id:'act5_name_reveal', location:'forbidden_forest_v4', bg:'bg_forest_dark',
+    actors:[A_ROMI, A_HATCHU],
+    dialog:[
       { who:'hatchu', text:'핑…\n하… 츄… 핑…!' },
-      { who:'hatchu', text:'하츄핑이야!\n내 이름은 — 하츄핑!' }
+      { who:'hatchu', text:'하츄핑이야!\n내 이름은 — 하츄핑!' },
+      { who:'romi', text:'하츄핑…\n예쁜 이름이야.' }
     ]
   }];
 
@@ -278,41 +298,43 @@
         } else next();
       }
     },
-    // S6~S8: 호감도 3단계 (쿠키 → 자장가 → 이름)
+    // S6: 호감도 1 - 다가가는 방법 선택 (쿠키/자장가/기다림)
     {
-      id:'affection_1_cookie',
+      id:'affection_1_approach',
       enter:function(next){
         window.Dispatcher.switchMode('v2_scene');
         if(window.SceneEngine){
-          window.SceneEngine.start(AFFECTION_COOKIE, () => {
-            window.STATE.storyFlags = window.STATE.storyFlags || {};
-            window.STATE.storyFlags.act5_affection = (window.STATE.storyFlags.act5_affection||0) + 2;
-            next();
-          });
+          window.SceneEngine.start(AFFECTION_APPROACH, () => next());
         } else next();
       }
     },
+    // S7: 호감도 2 - 반응 선택 (안기/말걸기/꽃)
     {
-      id:'affection_2_lullaby',
+      id:'affection_2_react',
       enter:function(next){
         window.Dispatcher.switchMode('v2_scene');
         if(window.SceneEngine){
-          window.SceneEngine.start(AFFECTION_LULLABY, () => {
-            window.STATE.storyFlags.act5_affection = (window.STATE.storyFlags.act5_affection||0) + 3;
-            next();
-          });
+          window.SceneEngine.start(AFFECTION_REACT, () => next());
         } else next();
       }
     },
+    // S8: 호감도 3 - 이름 물기 선택
     {
       id:'affection_3_namecall',
       enter:function(next){
         window.Dispatcher.switchMode('v2_scene');
         if(window.SceneEngine){
-          window.SceneEngine.start(AFFECTION_NAMECALL, () => {
-            window.STATE.storyFlags.act5_affection = (window.STATE.storyFlags.act5_affection||0) + 5;
-            next();
-          });
+          window.SceneEngine.start(AFFECTION_NAMECALL, () => next());
+        } else next();
+      }
+    },
+    // S8b: 이름 공개 (선택과 무관한 필연)
+    {
+      id:'name_reveal',
+      enter:function(next){
+        window.Dispatcher.switchMode('v2_scene');
+        if(window.SceneEngine){
+          window.SceneEngine.start(NAME_REVEAL, () => next());
         } else next();
       }
     },
@@ -351,7 +373,7 @@
         } else next();
       }
     },
-    // S11: Act6 진입
+    // S11: 엔딩 + 자유 탐험으로 복귀 (freeze 방지)
     {
       id:'to_act6',
       enter:function(next){
@@ -359,21 +381,31 @@
         window.STATE.act = 6;
         if(window.ACT6 && typeof window.ACT6.start === 'function'){
           window.ACT6.start();
-        } else {
-          // Act6 미구현 시 엔딩 텍스트로 마무리
-          window.Dispatcher.switchMode('v2_scene');
-          if(window.SceneEngine){
-            window.SceneEngine.start([{
-              id:'act5_end_placeholder',
-              actors:[A_NAR],
-              dialog:[
-                { who:'narration', text:'— 제 1부 완 —' },
-                { who:'narration', text:'로미와 하츄핑의 진짜 이야기는\n이제 시작입니다.' },
-                { who:'narration', text:'(다음 업데이트에서 계속됩니다)' }
-              ]
-            }], ()=>{});
-          }
-          console.log('[ACT5] 완료 — ACT6 대기');
+          return;
+        }
+        // Act6 미구현: 엔딩 씬 → 감정의 숲 자유 탐험 맵으로 복귀
+        window.Dispatcher.switchMode('v2_scene');
+        if(window.SceneEngine){
+          window.SceneEngine.start([{
+            id:'act5_end_scene',
+            actors:[A_ROMI, A_HATCHU],
+            bg:'bg_forest',
+            dialog:[
+              { who:'narration', text:'— 제 1부 완 —' },
+              { who:'hatchu', text:'짝꿍! 나 이제 로미랑 계속 같이 있을 거야!' },
+              { who:'romi', text:'응. 우리 이야기는\n이제부터 시작이야.' },
+              { who:'narration', text:'호감도: ' + (window.STATE.storyFlags.act5_affection || 0) + ' / 10' },
+              { who:'narration', text:'(자유 탐험 모드로 돌아갑니다.\n하츄핑과 함께 감정의 숲을 거닐어보세요.)' }
+            ]
+          }], ()=>{
+            // 감정의 숲 자유 탐험
+            window.Dispatcher.switchMode('v3_map', {
+              mapId:'emotion_forest_v4',
+              encounterRate: 0.05,
+              freePlay: true
+            });
+            console.log('[ACT5] 완료 — 자유 탐험 모드 진입 (하츄핑 파트너)');
+          });
         }
       }
     }
@@ -390,7 +422,9 @@
     id: 'act5_forest',
     title: '금단의 숲 — 하츄핑',
     stages: stages,
-    start: function(){ runStage(0); }
+    start: function(){ runStage(0); },
+    // 디버그: 특정 스테이지부터 시작 (QA용)
+    startFrom: function(i){ runStage(i|0); }
   };
 
   console.log('[UNIFIED] ACT5 (감정의 숲 + 하츄핑 호감도) 로드 완료 -', stages.length, '스테이지');

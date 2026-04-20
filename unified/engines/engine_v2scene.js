@@ -40,7 +40,10 @@
     typingStartTs: 0,
     onComplete: null,
     t: 0,                  // 프레임 카운터 (바운스 등)
-    actorsById: {}         // 현재 씬 actors 빠른 조회
+    actorsById: {},        // 현재 씬 actors 빠른 조회
+    choiceMode: false,     // 선택지 대기 상태
+    choiceRects: [],       // 선택지 버튼 영역 [{x,y,w,h,opt}]
+    choiceSelect: null     // 선택 콜백 (scene 기반)
   };
 
   // ==========================================================
@@ -70,6 +73,8 @@
     S.dialogIdx = 0;
     S.typed = 0;
     S.typingStartTs = performance.now();
+    S.choiceMode = false;
+    S.choiceRects = [];
     // actors 색인
     S.actorsById = {};
     (S.data.actors || []).forEach(a => { S.actorsById[a.id] = a; });
@@ -104,13 +109,95 @@
     _drawBg(ctx, W, H);
     _drawActors(ctx, W, H);
     _drawDialogBox(ctx, W, H);
+    if(S.choiceMode) _drawChoices(ctx, W, H);
+  }
+
+  // 선택지 버튼 렌더 (하단 오버레이)
+  function _drawChoices(ctx, W, H){
+    const opts = (S.data && S.data.choices) || [];
+    if(opts.length === 0) return;
+    const prompt = S.data.choicePrompt || '어떻게 할까?';
+    // 반투명 오버레이
+    ctx.fillStyle = 'rgba(10,5,21,0.75)';
+    ctx.fillRect(0, 0, W, H);
+    // 프롬프트
+    ctx.font = 'bold 18px "Jua", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#FFD54F';
+    ctx.fillText(prompt, W/2, H * 0.35);
+    // 버튼 레이아웃
+    const btnW = W * 0.8;
+    const btnH = 52;
+    const gap  = 12;
+    const totalH = opts.length * btnH + (opts.length - 1) * gap;
+    const startY = H * 0.42;
+    S.choiceRects = [];
+    for(let i=0; i<opts.length; i++){
+      const opt = opts[i];
+      const bx = (W - btnW) / 2;
+      const by = startY + i * (btnH + gap);
+      // 버튼 배경
+      _roundRect(ctx, bx, by, btnW, btnH, 14);
+      ctx.fillStyle = 'rgba(255,107,157,0.85)';
+      ctx.fill();
+      ctx.strokeStyle = '#FFD54F';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      // 텍스트
+      ctx.font = 'bold 16px "Jua", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#fff';
+      ctx.fillText(opt.text, W/2, by + btnH/2);
+      S.choiceRects.push({ x:bx, y:by, w:btnW, h:btnH, opt:opt, idx:i });
+    }
+    ctx.textBaseline = 'alphabetic';
+    // 하단 힌트
+    ctx.font = '12px "Jua", sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.fillText('버튼을 선택해주세요', W/2, H - 30);
   }
 
   // handleInput(x, y, kind) — kind: 'down'|'tap'|'key'|'enter'
   function handleInput(x, y, kind){
     if(!S.active) return;
+    // 선택지 대기 중이면 버튼 히트 체크
+    if(S.choiceMode){
+      // 'down' 이벤트에서만 히트 체크 (mouseup 도 허용)
+      if(kind === 'down' || kind === 'tap' || kind === 'up'){
+        for(let i=0; i<S.choiceRects.length; i++){
+          const r = S.choiceRects[i];
+          if(x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h){
+            _selectChoice(r.opt, r.idx);
+            return;
+          }
+        }
+      }
+      return; // 버튼 외 영역 무시
+    }
     // 탭/Enter 모두 진행 트리거로 취급
     _advance();
+  }
+
+  function _selectChoice(opt, idx){
+    // 플래그/호감도 저장
+    window.STATE = window.STATE || {};
+    window.STATE.storyFlags = window.STATE.storyFlags || {};
+    if(opt.affection != null){
+      const key = (S.data && S.data.affectionKey) || 'act5_affection';
+      window.STATE.storyFlags[key] = (window.STATE.storyFlags[key] || 0) + opt.affection;
+    }
+    if(opt.flag){
+      window.STATE.storyFlags['choice_' + opt.flag] = true;
+    }
+    // scene 의 onChoice 훅
+    if(typeof S.data.onChoice === 'function'){
+      try{ S.data.onChoice(opt, idx, window.STATE); }catch(e){ console.error('[SceneEngine] onChoice err:', e); }
+    }
+    // 다음 씬
+    S.choiceMode = false;
+    S.choiceRects = [];
+    _nextScene();
   }
 
   function onEnter(opts){
@@ -134,7 +221,7 @@
 
   function _advance(){
     const line = _currentLine();
-    if(!line){ _nextScene(); return; }
+    if(!line){ _maybeEnterChoice(); return; }
     const full = (line.text || '');
     if(S.typed < full.length){
       // 타이핑 중이면 즉시 완성
@@ -145,11 +232,20 @@
     S.dialogIdx++;
     const next = _currentLine();
     if(!next){
-      _nextScene();
+      _maybeEnterChoice();
     } else {
       S.typed = 0;
       S.typingStartTs = performance.now();
     }
+  }
+
+  function _maybeEnterChoice(){
+    // 대사 끝났을 때 choices 있으면 choice mode 진입
+    if(S.data && Array.isArray(S.data.choices) && S.data.choices.length > 0){
+      S.choiceMode = true;
+      return;
+    }
+    _nextScene();
   }
 
   function _nextScene(){
