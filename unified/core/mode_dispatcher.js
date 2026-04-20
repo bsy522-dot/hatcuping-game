@@ -8,6 +8,7 @@
 
   // 모드 → 엔진(window.X) 매핑
   const ENGINE_MAP = {
+    title:      'TitleScreen',       // 타이틀 화면
     v2_scene:   'SceneEngine',       // v2 대화형 씬 (카톡 다이얼로그)
     platformer: 'PlatformerEngine',  // Act2 성 탈출 (마리오식)
     dodge:      'DodgeEngine',       // Act1.5 눈피하기
