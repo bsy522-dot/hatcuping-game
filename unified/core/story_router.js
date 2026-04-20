@@ -15,7 +15,8 @@
       'act2_escape':     'ACT2',
       'act2_post':       'ACT2_POST',
       'act3_bus':        'ACT3',
-      'act4_village':    'ACT4'
+      'act4_village':    'ACT4',
+      'act5_forest':     'ACT5'
     };
     for(const id in keys){
       if(window[keys[id]]) ACT_MAP[id] = window[keys[id]];
@@ -69,6 +70,11 @@
 
   function handleComplete(act){
     const oc = act.onComplete;
+    // opts.returnTo 폴백: Act2(platformer)처럼 onComplete 없고 opts.returnTo만 있는 경우
+    if(!oc && act.opts && act.opts.returnTo){
+      play(act.opts.returnTo);
+      return;
+    }
     if(!oc){ console.log('[StoryRouter]', act.id, '완료, 체인 없음'); return; }
     if(oc.setFlags){
       window.STATE.storyFlags = window.STATE.storyFlags || {};
@@ -93,7 +99,18 @@
     }
 
     if(trig === 'v3_map'){
-      const opts = oc.opts || (oc.next ? { mapId: oc.next } : {});
+      // oc.next 가 등록된 Act이면 해당 Act으로 위임 (Act3 등이 자체 맵 열음)
+      ensureMap();
+      if(oc.next && ACT_MAP[oc.next]){
+        play(oc.next);
+        return;
+      }
+      // Act2_post → castle_gate → Act3 자동 연결
+      if(oc.next === 'castle_gate' && window.ACT3){
+        play('act3_bus');
+        return;
+      }
+      const opts = Object.assign({ mapId: oc.next }, oc.opts || {});
       window.Dispatcher.switchMode('v3_map', opts);
       return;
     }
