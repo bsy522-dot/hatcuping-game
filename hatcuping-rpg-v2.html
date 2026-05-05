@@ -456,7 +456,7 @@ function loadGame(){try{
 function hasSave(){try{return!!localStorage.getItem('hatcuping_rpg2_save')}catch(e){return false}}
 
 // ===== STORY =====
-function goStory(arr,cb){stQ=arr;stI=0;stTx='';stDn=false;stCb=cb;doTrans('story',()=>typeSt())}
+function goStory(arr,cb){stQ=arr;stI=0;stTx='';stDn=false;stCb=cb;BGM.stopBGM();doTrans('story',()=>typeSt())}
 function typeSt(){const s=stQ[stI];if(!s)return;stTx='';stDn=false;let i=0;const tx=s.tx;
   clearInterval(stTm);stTm=setInterval(()=>{if(i<tx.length)stTx=tx.slice(0,++i);else{stDn=true;clearInterval(stTm)}},22)}
 function advSt(){if(!stDn){clearInterval(stTm);stTx=stQ[stI].tx;stDn=true;return}
@@ -595,7 +595,7 @@ function advDlg(){
           {bg:'bg_fountain',char:null,sp:'',tx:'모두가 화해하고\n행복해졌습니다!'},
           {bg:'bg_fountain',char:'hf',sp:'하츄핑',tx:'사랑의 힘이 모든 걸\n바꿨어! 우리 최고!'},
           {bg:'bg_fountain',char:null,sp:'',tx:'로미와 하츄핑의 모험은\n영원히 계속됩니다...'},
-        ],()=>{earnSticker('s8');doTrans('ending')});
+        ],()=>{earnSticker('s8');BGM.stopBGM();doTrans('ending')});
       });
     }
     if(npc&&npc.cond==='ch2'&&storyFlags.ch===3){
@@ -730,7 +730,7 @@ function batWin(){
         {bg:'bg_fountain',char:null,sp:'',tx:'비밀 정원으로 가면\n라라핑이 알고 있대요!'},
       ],()=>{enterMap('secret_garden',4,5)})},2000);return}
   checkStickers();setTimeout(()=>{if(bat)batEnd()},2000)}
-function batEnd(){if(!bat&&scr!=='battle')return;bat=null;doTrans('map')}
+function batEnd(){if(!bat&&scr!=='battle')return;bat=null;BGM.stopBGM();enemyDeath={active:false,scale:1,alpha:1};levelUpSparkles=[];dmgFloats=[];battleFlash={active:false,alpha:0};doTrans('map')}
 
 // ===== UPDATE =====
 function update(){
@@ -957,10 +957,23 @@ function renderMap(){
       btns.push({x:tx,y:62,w:(W-70)/4,h:28,id:'tab'+i});
     });
     const cy=100;
-    if(menuTab===0){// Party
+    if(menuTab===0){// Party + Status
       const sMap={hatchu:'hs',baro:'ba',chacha:'ch',kkong:'kk',bukku:'bk'};
-      if(party.length===0){X.fillStyle='#fff';X.font=FN(13);X.textAlign='center';X.fillText('아직 파티원이 없어요!',W/2,140)}
-      party.forEach((p,i)=>{const y=cy+i*65;
+      // Play time
+      const hrs=Math.floor(playElapsed/3600);const mins=Math.floor((playElapsed%3600)/60);const secs=playElapsed%60;
+      rr(X,25,cy,W-50,22,6,'rgba(255,255,255,0.1)');
+      X.fillStyle='rgba(255,255,255,0.7)';X.font=FN(11);X.textAlign='left';
+      X.fillText('플레이 시간: '+(hrs>0?hrs+'시간 ':'')+mins+'분 '+secs+'초',32,cy+15);
+      // Current quest objective
+      const curQuest=QUESTS.find(q=>!q.done);
+      if(curQuest){rr(X,25,cy+26,W-50,24,6,'rgba(255,215,0,0.15)');
+        X.fillStyle='#FFD700';X.font=FN(11);X.textAlign='left';X.fillText('목표: '+curQuest.name+' - '+curQuest.desc,32,cy+42)}
+      // Equipped item
+      if(equipped){rr(X,25,cy+54,W-50,22,6,'rgba(186,104,194,0.2)');
+        X.fillStyle='#BA68C8';X.font=FN(11);X.textAlign='left';X.fillText('장착: '+equipped.name+' ('+equipped.desc+')',32,cy+69)}
+      const partyStartY=cy+(equipped?82:58);
+      if(party.length===0){X.fillStyle='#fff';X.font=FN(13);X.textAlign='center';X.fillText('아직 파티원이 없어요!',W/2,partyStartY+20)}
+      party.forEach((p,i)=>{const y=partyStartY+i*65;
         rr(X,25,y,W-50,58,10,'rgba(255,255,255,0.15)');
         const img=IM[sMap[p.key]];if(img)X.drawImage(img,32,y+5,42,42);
         X.fillStyle='#fff';X.font=FN(13);X.textAlign='left';X.fillText(p.ic+' '+p.n+(i===0?' (리더)':''),82,y+18);
@@ -1006,6 +1019,19 @@ function renderMap(){
     X.fillStyle='#fff';X.font=FN(28);X.fillText(stickerPopup.icon,W/2,195);
     X.font=FN(12);X.fillText(stickerPopup.name,W/2,215);
     X.globalAlpha=1;
+  }
+  // Save indicator (floppy disk icon)
+  if(saveIndicator.show){
+    const sa=clamp(saveIndicator.timer/20,0,1);
+    X.globalAlpha=sa;X.fillStyle='rgba(0,0,0,0.6)';
+    rr(X,W-60,H-160,48,40,8,'rgba(0,0,0,0.7)');
+    X.fillStyle='#fff';X.font=FN(20);X.textAlign='center';X.fillText('💾',W-36,H-135);
+    X.fillStyle='rgba(255,255,255,0.8)';X.font=FN(8);X.fillText('SAVED',W-36,H-123);
+    X.globalAlpha=1;
+  }
+  // Map fade overlay
+  if(mapFade.active&&mapFade.alpha>0){
+    X.fillStyle='rgba(0,0,0,'+mapFade.alpha+')';X.fillRect(0,0,W,H);
   }
 }
 
