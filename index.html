@@ -13,8 +13,7 @@
 <link rel="manifest" href="manifest.json">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
-body{font-family:'Noto Sans KR',sans-serif;background:linear-gradient(160deg,#FFF0F8 0%,#FFE0F0 30%,#E8D0FF 60%,#D0E8FF 100%);min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;overflow-x:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:linear-gradient(160deg,#FFF0F8 0%,#FFE0F0 30%,#E8D0FF 60%,#D0E8FF 100%);min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;overflow-x:hidden}
 
 .logo{margin-bottom:8px}
 .logo svg{width:80px;height:80px;filter:drop-shadow(0 4px 12px rgba(255,95,162,.4));animation:float 3s ease-in-out infinite}
@@ -30,6 +29,8 @@ h1{font-size:28px;font-weight:900;background:linear-gradient(135deg,#FF5FA2,#B06
 .card{background:white;border-radius:24px;padding:24px;cursor:pointer;text-decoration:none;color:inherit;box-shadow:0 4px 20px rgba(0,0,0,.06);border:2px solid transparent;transition:all .3s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;opacity:0;transform:translateY(20px)}
 .card:nth-child(1){animation:cardIn .6s .4s forwards}
 .card:nth-child(2){animation:cardIn .6s .6s forwards}
+.card:nth-child(3){animation:cardIn .6s .8s forwards}
+.card:nth-child(4){animation:cardIn .6s 1s forwards}
 @keyframes cardIn{to{opacity:1;transform:translateY(0)}}
 .card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 12px 40px rgba(255,95,162,.18)}
 .card:active{transform:scale(.97)}
@@ -72,9 +73,30 @@ h1{font-size:28px;font-weight:900;background:linear-gradient(135deg,#FF5FA2,#B06
 
 .content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
 
+.new-badge{position:absolute;top:12px;right:52px;background:linear-gradient(135deg,#FF3366,#FF6B9D);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:12px;animation:badgePulse 1.5s ease-in-out infinite;z-index:2;letter-spacing:1px}
+@keyframes badgePulse{0%,100%{transform:scale(1);box-shadow:0 2px 8px rgba(255,51,102,.3)}50%{transform:scale(1.1);box-shadow:0 4px 16px rgba(255,51,102,.5)}}
+
+.floating-hearts{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0}
+.fheart{position:absolute;bottom:-40px;font-size:20px;opacity:0;animation:floatHeart linear infinite}
+@keyframes floatHeart{0%{opacity:0;transform:translateX(0) scale(.6)}10%{opacity:.6}50%{transform:translateX(30px) scale(.9)}90%{opacity:.4}100%{opacity:0;transform:translateX(-20px) translateY(-100vh) scale(.5)}}
+
+.recent-play{width:100%;max-width:400px;margin-top:20px;padding:14px 18px;background:rgba(255,255,255,.6);border-radius:16px;border:1px solid rgba(255,95,162,.15);opacity:0;animation:fadeUp .8s 1.2s forwards;display:none}
+.recent-play.show{display:block}
+.recent-play-title{font-size:12px;color:#B088CC;font-weight:700;margin-bottom:6px}
+.recent-play a{font-size:13px;color:#FF5FA2;text-decoration:none;font-weight:700}
+.recent-play a:hover{text-decoration:underline}
+.recent-play .recent-time{font-size:11px;color:#bbb;margin-left:8px}
+
+.card:focus{outline:3px solid #FF5FA2;outline-offset:2px;transform:translateY(-6px) scale(1.02);box-shadow:0 12px 40px rgba(255,95,162,.18)}
+.card.kb-selected{outline:3px solid #FF5FA2;outline-offset:2px;transform:translateY(-6px) scale(1.02);box-shadow:0 12px 40px rgba(255,95,162,.18)}
+
+.pwa-install-btn{display:none;margin-top:10px;padding:8px 20px;background:linear-gradient(135deg,#FF5FA2,#B066FF);color:#fff;border:none;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;transition:all .3s}
+.pwa-install-btn:hover{transform:scale(1.05);box-shadow:0 4px 16px rgba(255,95,162,.3)}
+
 @media(min-width:500px){
   .cards{flex-direction:row;max-width:700px}
   .card{flex:1}
+  .recent-play{max-width:700px}
 }
 @media(prefers-color-scheme:dark){
   body{background:linear-gradient(160deg,#1a0a2e 0%,#2d1040 30%,#1a1040 60%,#0d1030 100%)}
@@ -87,11 +109,25 @@ h1{font-size:28px;font-weight:900;background:linear-gradient(135deg,#FF5FA2,#B06
   h1{-webkit-text-fill-color:transparent}
   .sub{color:#8866AA}
   .footer p,.footer .version{color:#6644AA}
+  .recent-play{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
+  .recent-play-title{color:#8866AA}
+  .recent-play a{color:#FF8EC4}
+  .recent-play .recent-time{color:#666}
 }
 </style>
 </head>
 <body>
 <div class="sparkles" id="sparkles"></div>
+<div class="floating-hearts">
+  <div class="fheart" style="left:5%;font-size:16px;animation-duration:12s;animation-delay:0s">&#x1F497;</div>
+  <div class="fheart" style="left:15%;font-size:22px;animation-duration:14s;animation-delay:2s">&#x1F495;</div>
+  <div class="fheart" style="left:28%;font-size:14px;animation-duration:10s;animation-delay:1s">&#x1F496;</div>
+  <div class="fheart" style="left:40%;font-size:18px;animation-duration:13s;animation-delay:4s">&#x1F497;</div>
+  <div class="fheart" style="left:55%;font-size:20px;animation-duration:11s;animation-delay:3s">&#x1F495;</div>
+  <div class="fheart" style="left:68%;font-size:15px;animation-duration:15s;animation-delay:5s">&#x1F496;</div>
+  <div class="fheart" style="left:80%;font-size:19px;animation-duration:12s;animation-delay:1.5s">&#x1F497;</div>
+  <div class="fheart" style="left:92%;font-size:17px;animation-duration:14s;animation-delay:6s">&#x1F495;</div>
+</div>
 <div class="content">
   <div class="logo">
     <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
@@ -162,6 +198,7 @@ h1{font-size:28px;font-weight:900;background:linear-gradient(135deg,#FF5FA2,#B06
       </div>
     </a>
     <a href="hatcuping-unified.html" class="card card-rpg">
+      <span class="new-badge">NEW</span>
       <div class="card-shine"></div>
       <div class="card-header">
         <div class="card-icon">💖</div>
@@ -172,17 +209,23 @@ h1{font-size:28px;font-weight:900;background:linear-gradient(135deg,#FF5FA2,#B06
       </div>
       <p>사랑의 하츄핑 영화 스토리! 대화→눈피하기→성탈출→버스러닝→RPG 올인원!</p>
       <div class="card-features">
-        <span class="feature">8 Act</span>
+        <span class="feature">6 Act</span>
         <span class="feature">5 엔진</span>
-        <span class="feature">로미가 직접 전투</span>
+        <span class="feature">타이틀 화면</span>
         <span class="feature">협력 최종전</span>
       </div>
     </a>
   </div>
 
+  <div class="recent-play" id="recentPlay">
+    <div class="recent-play-title">최근 플레이</div>
+    <div id="recentContent"></div>
+  </div>
+
   <div class="footer">
     <p>이모션 왕국에서 펼쳐지는 사랑과 우정의 이야기</p>
-    <p class="version">v4.0 | PRIME Holdings NEXTERA+PRISM</p>
+    <p class="version">v5.0 | &copy; PRIME Holdings NEXTERA+PRISM</p>
+    <button class="pwa-install-btn" id="pwaInstallBtn">앱으로 설치하기</button>
   </div>
 </div>
 
@@ -215,6 +258,95 @@ document.addEventListener('mousemove',e=>{
   document.querySelector('.content').style.transform=
     'translate('+x+'px,'+y+'px)';
 });
+
+// --- Recent Play (localStorage) ---
+const gameNames={
+  'hatcuping-game-v2.html':'탈출 어드벤처 v2',
+  'hatcuping-rpg-v2.html':'RPG 대모험 v2',
+  'rpg-v3/index.html':'RPG v3 원작 완전판',
+  'hatcuping-unified.html':'UNIFIED v4 통합판'
+};
+function loadRecent(){
+  try{
+    const d=JSON.parse(localStorage.getItem('hatcuping_recent'));
+    if(d&&d.href&&d.time){
+      const el=document.getElementById('recentPlay');
+      const ct=document.getElementById('recentContent');
+      const name=gameNames[d.href]||d.href;
+      const ago=timeAgo(d.time);
+      ct.innerHTML='<a href="'+d.href+'">'+name+'</a><span class="recent-time">'+ago+'</span>';
+      el.classList.add('show');
+    }
+  }catch(e){}
+}
+function timeAgo(ts){
+  const diff=Date.now()-ts;
+  const m=Math.floor(diff/60000);
+  if(m<1) return '방금 전';
+  if(m<60) return m+'분 전';
+  const h=Math.floor(m/60);
+  if(h<24) return h+'시간 전';
+  const dd=Math.floor(h/24);
+  return dd+'일 전';
+}
+function saveRecent(href){
+  try{localStorage.setItem('hatcuping_recent',JSON.stringify({href:href,time:Date.now()}));}catch(e){}
+}
+document.querySelectorAll('.card').forEach(c=>{
+  c.addEventListener('click',()=>{
+    const href=c.getAttribute('href');
+    if(href) saveRecent(href);
+  });
+});
+loadRecent();
+
+// --- Keyboard Navigation ---
+(function(){
+  const cards=Array.from(document.querySelectorAll('.card'));
+  let kbIdx=-1;
+  function updateKb(){
+    cards.forEach((c,i)=>{
+      if(i===kbIdx) c.classList.add('kb-selected');
+      else c.classList.remove('kb-selected');
+    });
+    if(kbIdx>=0) cards[kbIdx].scrollIntoView({block:'nearest',behavior:'smooth'});
+  }
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowDown'||e.key==='ArrowRight'){
+      e.preventDefault();
+      kbIdx=Math.min(kbIdx+1,cards.length-1);
+      updateKb();
+    }else if(e.key==='ArrowUp'||e.key==='ArrowLeft'){
+      e.preventDefault();
+      kbIdx=Math.max(kbIdx-1,0);
+      updateKb();
+    }else if(e.key==='Enter'&&kbIdx>=0){
+      e.preventDefault();
+      cards[kbIdx].click();
+    }
+  });
+})();
+
+// --- PWA Install Prompt ---
+(function(){
+  let deferredPrompt=null;
+  const btn=document.getElementById('pwaInstallBtn');
+  window.addEventListener('beforeinstallprompt',e=>{
+    e.preventDefault();
+    deferredPrompt=e;
+    if(btn) btn.style.display='inline-block';
+  });
+  if(btn){
+    btn.addEventListener('click',()=>{
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(r=>{
+        deferredPrompt=null;
+        btn.style.display='none';
+      });
+    });
+  }
+})();
 </script>
 </body>
 </html>
