@@ -13,19 +13,30 @@
 <link rel="manifest" href="manifest.json">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:linear-gradient(160deg,#FFF0F8 0%,#FFE0F0 30%,#E8D0FF 60%,#D0E8FF 100%);min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;overflow-x:hidden}
-
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:linear-gradient(160deg,#FFF0F8 0%,#FFE0F0 30%,#E8D0FF 60%,#D0E8FF 100%);min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;overflow-x:hidden;transition:background .4s,color .4s}
+body.dark{background:linear-gradient(160deg,#1a0a2e 0%,#2d1040 30%,#1a1040 60%,#0d1030 100%);color:#eee}
+a:focus-visible{outline:3px solid #FF5FA2;outline-offset:2px}
+.skip-link{position:absolute;top:-100px;left:16px;background:#FF5FA2;color:#fff;padding:8px 16px;border-radius:8px;z-index:1000;font-size:14px;font-weight:700;text-decoration:none;transition:top .2s}
+.skip-link:focus{top:16px}
 .logo{margin-bottom:8px}
 .logo svg{width:80px;height:80px;filter:drop-shadow(0 4px 12px rgba(255,95,162,.4));animation:float 3s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-6px) rotate(-2deg)}50%{transform:translateY(-10px) rotate(0deg)}75%{transform:translateY(-6px) rotate(2deg)}}
-
 h1{font-size:28px;font-weight:900;background:linear-gradient(135deg,#FF5FA2,#B066FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;animation:titlePulse 3s ease-in-out infinite}
 @keyframes titlePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
-.sub{font-size:14px;color:#B088CC;margin-bottom:32px;opacity:0;animation:fadeUp .8s .3s forwards}
+.sub{font-size:14px;color:#B088CC;margin-bottom:24px;opacity:0;animation:fadeUp .8s .3s forwards}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-
+.top-bar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;justify-content:center}
+.top-btn{background:rgba(255,255,255,.7);border:2px solid rgba(255,95,162,.2);border-radius:20px;padding:6px 14px;cursor:pointer;font-size:12px;font-weight:700;color:#666;transition:all .3s;display:flex;align-items:center;gap:6px}
+.top-btn:hover{transform:scale(1.05);border-color:#FF5FA2;color:#FF5FA2}
+body.dark .top-btn{background:rgba(255,255,255,.1);color:#ccc;border-color:rgba(255,255,255,.15)}
+body.dark .top-btn:hover{border-color:#FF8EC4;color:#FF8EC4}
+.difficulty-selector{display:flex;gap:4px;background:rgba(0,0,0,.05);border-radius:16px;padding:3px}
+body.dark .difficulty-selector{background:rgba(255,255,255,.06)}
+.diff-btn{padding:4px 10px;border-radius:14px;border:none;cursor:pointer;font-size:11px;font-weight:700;background:transparent;color:#888;transition:all .2s}
+.diff-btn.active{background:#FF5FA2;color:#fff}
+.diff-btn:hover:not(.active){background:rgba(255,95,162,.15)}
+body.dark .diff-btn{color:#999}
 .cards{display:flex;flex-direction:column;gap:16px;width:100%;max-width:400px}
-
 .card{background:white;border-radius:24px;padding:24px;cursor:pointer;text-decoration:none;color:inherit;box-shadow:0 4px 20px rgba(0,0,0,.06);border:2px solid transparent;transition:all .3s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;opacity:0;transform:translateY(20px)}
 .card:nth-child(1){animation:cardIn .6s .4s forwards}
 .card:nth-child(2){animation:cardIn .6s .6s forwards}
@@ -34,91 +45,91 @@ h1{font-size:28px;font-weight:900;background:linear-gradient(135deg,#FF5FA2,#B06
 @keyframes cardIn{to{opacity:1;transform:translateY(0)}}
 .card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 12px 40px rgba(255,95,162,.18)}
 .card:active{transform:scale(.97)}
-
 .card-plat{border-color:#FFB8D9}
 .card-plat:hover{border-color:#FF5FA2;background:linear-gradient(135deg,#fff 60%,#FFF0F6)}
 .card-rpg{border-color:#C8B8FF}
 .card-rpg:hover{border-color:#8B5CF6;background:linear-gradient(135deg,#fff 60%,#F0EEFF)}
-
 .card-header{display:flex;align-items:center;gap:12px;margin-bottom:8px}
 .card-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;transition:transform .3s}
 .card:hover .card-icon{transform:scale(1.1) rotate(-5deg)}
 .card-plat .card-icon{background:linear-gradient(135deg,#FFE0F0,#FFB8D9)}
 .card-rpg .card-icon{background:linear-gradient(135deg,#E8DFFF,#C8B8FF)}
-
 .card-title-wrap{flex:1}
 .card h2{font-size:17px;font-weight:700;margin-bottom:2px}
 .card .tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px}
 .card-plat .tag{background:#FFF0F6;color:#FF5FA2}
 .card-rpg .tag{background:#F0EEFF;color:#8B5CF6}
-
 .card p{font-size:13px;color:#888;line-height:1.5;margin-bottom:8px}
-
 .card-features{display:flex;gap:6px;flex-wrap:wrap}
 .feature{font-size:10px;padding:3px 8px;border-radius:12px;background:rgba(0,0,0,.04);color:#666;font-weight:500}
-
 .card::after{content:'';position:absolute;right:16px;top:24px;width:28px;height:28px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ccc' viewBox='0 0 24 24'%3E%3Cpath d='M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z'/%3E%3C/svg%3E") center/contain no-repeat;transition:transform .3s}
 .card:hover::after{transform:translateX(4px)}
-
 .card-shine{position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:none;pointer-events:none}
 .card:hover .card-shine{left:100%;transition:left .6s}
-
-.footer{margin-top:32px;text-align:center;opacity:0;animation:fadeUp .8s .8s forwards}
+.stats-section{width:100%;max-width:400px;margin-top:16px;padding:14px 18px;background:rgba(255,255,255,.6);border-radius:16px;border:1px solid rgba(255,95,162,.15);opacity:0;animation:fadeUp .8s 1s forwards;display:none}
+.stats-section.show{display:block}
+.stats-title{font-size:12px;color:#B088CC;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-item{font-size:12px;color:#777;display:flex;align-items:center;gap:4px}
+.stat-val{font-weight:700;color:#FF5FA2}
+body.dark .stats-section{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
+body.dark .stats-title{color:#8866AA}
+body.dark .stat-item{color:#999}
+body.dark .stat-val{color:#FF8EC4}
+.footer{margin-top:24px;text-align:center;opacity:0;animation:fadeUp .8s .8s forwards}
 .footer p{font-size:12px;color:#C0A0D8;line-height:1.6}
 .footer .version{font-size:10px;color:#D0B8E0;margin-top:4px}
-
 .sparkles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0}
 .sparkle{position:absolute;border-radius:50%;animation:sparkle-fall linear infinite;opacity:0}
 @keyframes sparkle-fall{0%{opacity:0;transform:translateY(-10px) scale(0) rotate(0deg)}10%{opacity:1;transform:translateY(0) scale(1) rotate(30deg)}90%{opacity:.8;transform:rotate(180deg)}100%{opacity:0;transform:translateY(100vh) scale(0) rotate(360deg)}}
-
 .content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
-
 .new-badge{position:absolute;top:12px;right:52px;background:linear-gradient(135deg,#FF3366,#FF6B9D);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:12px;animation:badgePulse 1.5s ease-in-out infinite;z-index:2;letter-spacing:1px}
 @keyframes badgePulse{0%,100%{transform:scale(1);box-shadow:0 2px 8px rgba(255,51,102,.3)}50%{transform:scale(1.1);box-shadow:0 4px 16px rgba(255,51,102,.5)}}
-
 .floating-hearts{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0}
 .fheart{position:absolute;bottom:-40px;font-size:20px;opacity:0;animation:floatHeart linear infinite}
 @keyframes floatHeart{0%{opacity:0;transform:translateX(0) scale(.6)}10%{opacity:.6}50%{transform:translateX(30px) scale(.9)}90%{opacity:.4}100%{opacity:0;transform:translateX(-20px) translateY(-100vh) scale(.5)}}
-
-.recent-play{width:100%;max-width:400px;margin-top:20px;padding:14px 18px;background:rgba(255,255,255,.6);border-radius:16px;border:1px solid rgba(255,95,162,.15);opacity:0;animation:fadeUp .8s 1.2s forwards;display:none}
+.recent-play{width:100%;max-width:400px;margin-top:16px;padding:14px 18px;background:rgba(255,255,255,.6);border-radius:16px;border:1px solid rgba(255,95,162,.15);opacity:0;animation:fadeUp .8s 1.2s forwards;display:none}
 .recent-play.show{display:block}
 .recent-play-title{font-size:12px;color:#B088CC;font-weight:700;margin-bottom:6px}
 .recent-play a{font-size:13px;color:#FF5FA2;text-decoration:none;font-weight:700}
 .recent-play a:hover{text-decoration:underline}
 .recent-play .recent-time{font-size:11px;color:#bbb;margin-left:8px}
-
 .card:focus{outline:3px solid #FF5FA2;outline-offset:2px;transform:translateY(-6px) scale(1.02);box-shadow:0 12px 40px rgba(255,95,162,.18)}
 .card.kb-selected{outline:3px solid #FF5FA2;outline-offset:2px;transform:translateY(-6px) scale(1.02);box-shadow:0 12px 40px rgba(255,95,162,.18)}
-
 .pwa-install-btn{display:none;margin-top:10px;padding:8px 20px;background:linear-gradient(135deg,#FF5FA2,#B066FF);color:#fff;border:none;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;transition:all .3s}
 .pwa-install-btn:hover{transform:scale(1.05);box-shadow:0 4px 16px rgba(255,95,162,.3)}
-
-@media(min-width:500px){
-  .cards{flex-direction:row;max-width:700px}
-  .card{flex:1}
-  .recent-play{max-width:700px}
-}
-@media(prefers-color-scheme:dark){
-  body{background:linear-gradient(160deg,#1a0a2e 0%,#2d1040 30%,#1a1040 60%,#0d1030 100%)}
-  .card{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.1);color:#fff}
-  .card:hover{box-shadow:0 12px 40px rgba(255,95,162,.12)}
-  .card-plat:hover{background:linear-gradient(135deg,rgba(255,255,255,.08) 60%,rgba(255,95,162,.08))}
-  .card-rpg:hover{background:linear-gradient(135deg,rgba(255,255,255,.08) 60%,rgba(139,92,246,.08))}
-  .card p{color:#aaa}
-  .feature{background:rgba(255,255,255,.08);color:#bbb}
-  h1{-webkit-text-fill-color:transparent}
-  .sub{color:#8866AA}
-  .footer p,.footer .version{color:#6644AA}
-  .recent-play{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
-  .recent-play-title{color:#8866AA}
-  .recent-play a{color:#FF8EC4}
-  .recent-play .recent-time{color:#666}
-}
+.kb-help{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:999;justify-content:center;align-items:center}
+.kb-help.show{display:flex}
+.kb-help-inner{background:#fff;border-radius:20px;padding:24px;max-width:340px;width:90%;box-shadow:0 16px 48px rgba(0,0,0,.2)}
+body.dark .kb-help-inner{background:#2a1a3e;color:#eee}
+.kb-help h3{font-size:16px;margin-bottom:12px;color:#FF5FA2}
+.kb-help-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:13px}
+body.dark .kb-help-row{border-bottom-color:rgba(255,255,255,.08)}
+.kb-help-key{background:rgba(0,0,0,.08);padding:2px 8px;border-radius:6px;font-weight:700;font-size:12px}
+body.dark .kb-help-key{background:rgba(255,255,255,.12)}
+.kb-help-close{margin-top:16px;width:100%;padding:10px;background:#FF5FA2;color:#fff;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-size:14px}
+.achievement-toast{position:fixed;top:-80px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#FFD700,#FF8C00);color:#fff;padding:10px 20px;border-radius:16px;font-size:13px;font-weight:700;z-index:998;transition:top .5s cubic-bezier(.4,0,.2,1);box-shadow:0 4px 20px rgba(255,215,0,.4);white-space:nowrap}
+.achievement-toast.show{top:24px}
+body.dark .card{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.1);color:#fff}
+body.dark .card:hover{box-shadow:0 12px 40px rgba(255,95,162,.12)}
+body.dark .card-plat:hover{background:linear-gradient(135deg,rgba(255,255,255,.08) 60%,rgba(255,95,162,.08))}
+body.dark .card-rpg:hover{background:linear-gradient(135deg,rgba(255,255,255,.08) 60%,rgba(139,92,246,.08))}
+body.dark .card p{color:#aaa}
+body.dark .feature{background:rgba(255,255,255,.08);color:#bbb}
+body.dark h1{-webkit-text-fill-color:transparent}
+body.dark .sub{color:#8866AA}
+body.dark .footer p,.footer .version{color:#6644AA}
+body.dark .recent-play{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
+body.dark .recent-play-title{color:#8866AA}
+body.dark .recent-play a{color:#FF8EC4}
+body.dark .recent-play .recent-time{color:#666}
+@media(min-width:500px){.cards{flex-direction:row;max-width:700px}.card{flex:1}.recent-play,.stats-section{max-width:700px}}
 </style>
 </head>
 <body>
-<div class="sparkles" id="sparkles"></div>
-<div class="floating-hearts">
+<a href="#main-content" class="skip-link" aria-label="메인 콘텐츠로 건너뛰기">메인 콘텐츠로 건너뛰기</a>
+<div class="sparkles" id="sparkles" aria-hidden="true"></div>
+<div class="floating-hearts" aria-hidden="true">
   <div class="fheart" style="left:5%;font-size:16px;animation-duration:12s;animation-delay:0s">&#x1F497;</div>
   <div class="fheart" style="left:15%;font-size:22px;animation-duration:14s;animation-delay:2s">&#x1F495;</div>
   <div class="fheart" style="left:28%;font-size:14px;animation-duration:10s;animation-delay:1s">&#x1F496;</div>
@@ -128,225 +139,69 @@ h1{font-size:28px;font-weight:900;background:linear-gradient(135deg,#FF5FA2,#B06
   <div class="fheart" style="left:80%;font-size:19px;animation-duration:12s;animation-delay:1.5s">&#x1F497;</div>
   <div class="fheart" style="left:92%;font-size:17px;animation-duration:14s;animation-delay:6s">&#x1F495;</div>
 </div>
-<div class="content">
-  <div class="logo">
-    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF9ED8"/><stop offset="100%" stop-color="#FF5FA2"/></linearGradient></defs>
-      <path d="M32 58C18 50 6 40 6 26c0-10 8-18 18-18 5 0 8 3 8 3s3-3 8-3c10 0 18 8 18 18 0 14-12 24-26 32z" fill="url(#hg)"/>
-      <path d="M22 20l4 6-3 1 5 8" stroke="#FFE44D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      <circle cx="42" cy="18" r="4" fill="#FFE44D" opacity=".9"/>
-      <circle cx="46" cy="12" r="2.5" fill="#FFE44D" opacity=".7"/>
-      <circle cx="50" cy="17" r="2" fill="#FFE44D" opacity=".5"/>
-    </svg>
+<div class="achievement-toast" id="achieveToast" role="alert" aria-live="polite"></div>
+<div class="kb-help" id="kbHelp" role="dialog" aria-modal="true" aria-label="키보드 단축키">
+  <div class="kb-help-inner">
+    <h3>키보드 단축키</h3>
+    <div class="kb-help-row"><span>게임 선택</span><span class="kb-help-key">방향키 + Enter</span></div>
+    <div class="kb-help-row"><span>다크모드 전환</span><span class="kb-help-key">D</span></div>
+    <div class="kb-help-row"><span>난이도 변경</span><span class="kb-help-key">1 / 2 / 3</span></div>
+    <div class="kb-help-row"><span>이 도움말</span><span class="kb-help-key">?</span></div>
+    <div class="kb-help-row"><span>플랫포머 일시정지</span><span class="kb-help-key">ESC</span></div>
+    <div class="kb-help-row"><span>RPG 메뉴/일시정지</span><span class="kb-help-key">ESC / M</span></div>
+    <button class="kb-help-close" id="kbHelpClose">닫기</button>
+  </div>
+</div>
+<div class="content" id="main-content" role="main">
+  <div class="logo" aria-hidden="true">
+    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF9ED8"/><stop offset="100%" stop-color="#FF5FA2"/></linearGradient></defs><path d="M32 58C18 50 6 40 6 26c0-10 8-18 18-18 5 0 8 3 8 3s3-3 8-3c10 0 18 8 18 18 0 14-12 24-26 32z" fill="url(#hg)"/><path d="M22 20l4 6-3 1 5 8" stroke="#FFE44D" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="42" cy="18" r="4" fill="#FFE44D" opacity=".9"/><circle cx="46" cy="12" r="2.5" fill="#FFE44D" opacity=".7"/><circle cx="50" cy="17" r="2" fill="#FFE44D" opacity=".5"/></svg>
   </div>
   <h1>사랑의 하츄핑</h1>
   <p class="sub">로미와 하츄핑의 모험을 시작하세요!</p>
-
-  <div class="cards">
-    <a href="hatcuping-game-v2.html" class="card card-plat">
-      <div class="card-shine"></div>
-      <div class="card-header">
-        <div class="card-icon">🏃</div>
-        <div class="card-title-wrap">
-          <h2>탈출 어드벤처 v2</h2>
-          <span class="tag">액션 플랫포머</span>
-        </div>
-      </div>
-      <p>4명의 캐릭터로 10개 스테이지를 클리어하자! 달리고 점프하고 대시!</p>
-      <div class="card-features">
-        <span class="feature">10 레벨</span>
-        <span class="feature">보스전 3회</span>
-        <span class="feature">4캐릭터</span>
-        <span class="feature">더블점프</span>
-        <span class="feature">대시</span>
-      </div>
-    </a>
-    <a href="hatcuping-rpg-v2.html" class="card card-rpg">
-      <div class="card-shine"></div>
-      <div class="card-header">
-        <div class="card-icon">⚔️</div>
-        <div class="card-title-wrap">
-          <h2>RPG 대모험 v2</h2>
-          <span class="tag">턴제 RPG</span>
-        </div>
-      </div>
-      <p>10챕터 스토리! 친구를 모으고 트러핑과 화해하는 감동 RPG!</p>
-      <div class="card-features">
-        <span class="feature">10 챕터</span>
-        <span class="feature">9 맵</span>
-        <span class="feature">파티교체</span>
-        <span class="feature">포획</span>
-        <span class="feature">미니게임 5종</span>
-      </div>
-    </a>
-    <a href="rpg-v3/index.html" class="card card-rpg">
-      <div class="card-shine"></div>
-      <div class="card-header">
-        <div class="card-icon">✨</div>
-        <div class="card-title-wrap">
-          <h2>RPG v3 원작 완전판</h2>
-          <span class="tag">포켓몬식 오픈월드</span>
-        </div>
-      </div>
-      <p>시즌 1~5 + 극장판 전편! 티니핑 41종 도감, 체육관 8개, 제니 최종전!</p>
-      <div class="card-features">
-        <span class="feature">6 Act</span>
-        <span class="feature">20 맵</span>
-        <span class="feature">도감 41종</span>
-        <span class="feature">체육관 8</span>
-        <span class="feature">진화/레전드</span>
-      </div>
-    </a>
-    <a href="hatcuping-unified.html" class="card card-rpg">
-      <span class="new-badge">NEW</span>
-      <div class="card-shine"></div>
-      <div class="card-header">
-        <div class="card-icon">💖</div>
-        <div class="card-title-wrap">
-          <h2>UNIFIED v4 통합판</h2>
-          <span class="tag">3게임 융합 · 영화 감성</span>
-        </div>
-      </div>
-      <p>사랑의 하츄핑 영화 스토리! 대화→눈피하기→성탈출→버스러닝→RPG 올인원!</p>
-      <div class="card-features">
-        <span class="feature">6 Act</span>
-        <span class="feature">5 엔진</span>
-        <span class="feature">타이틀 화면</span>
-        <span class="feature">협력 최종전</span>
-      </div>
-    </a>
+  <div class="top-bar" role="toolbar" aria-label="설정">
+    <button class="top-btn" id="darkToggle" aria-label="다크모드 전환" title="다크모드 전환 (D)"><span id="darkIcon">&#x1F319;</span> <span id="darkLabel">다크모드</span></button>
+    <div class="difficulty-selector" role="radiogroup" aria-label="난이도 선택">
+      <button class="diff-btn" data-diff="easy" role="radio" aria-checked="false" title="쉬움 (1)">쉬움</button>
+      <button class="diff-btn active" data-diff="normal" role="radio" aria-checked="true" title="보통 (2)">보통</button>
+      <button class="diff-btn" data-diff="hard" role="radio" aria-checked="false" title="어려움 (3)">어려움</button>
+    </div>
+    <button class="top-btn" id="achieveBtn" aria-label="업적 보기" title="업적">&#x1F3C6; <span id="achieveCount">0/12</span></button>
+    <button class="top-btn" id="kbHelpBtn" aria-label="키보드 단축키 도움말" title="단축키 (?)">? 도움말</button>
   </div>
-
-  <div class="recent-play" id="recentPlay">
-    <div class="recent-play-title">최근 플레이</div>
-    <div id="recentContent"></div>
+  <nav class="cards" id="gameCards" aria-label="게임 목록">
+    <a href="hatcuping-game-v2.html" class="card card-plat" role="link" aria-label="탈출 어드벤처 v2 - 액션 플랫포머"><div class="card-shine"></div><div class="card-header"><div class="card-icon">&#x1F3C3;</div><div class="card-title-wrap"><h2>탈출 어드벤처 v2</h2><span class="tag">액션 플랫포머</span></div></div><p>4명의 캐릭터로 10개 스테이지를 클리어하자! 달리고 점프하고 대시!</p><div class="card-features"><span class="feature">10 레벨</span><span class="feature">보스전 3회</span><span class="feature">4캐릭터</span><span class="feature">더블점프</span><span class="feature">대시</span></div></a>
+    <a href="hatcuping-rpg-v2.html" class="card card-rpg" role="link" aria-label="RPG 대모험 v2 - 턴제 RPG"><div class="card-shine"></div><div class="card-header"><div class="card-icon">&#x2694;&#xFE0F;</div><div class="card-title-wrap"><h2>RPG 대모험 v2</h2><span class="tag">턴제 RPG</span></div></div><p>10챕터 스토리! 친구를 모으고 트러핑과 화해하는 감동 RPG!</p><div class="card-features"><span class="feature">10 챕터</span><span class="feature">9 맵</span><span class="feature">파티교체</span><span class="feature">포획</span><span class="feature">미니게임 5종</span></div></a>
+    <a href="rpg-v3/index.html" class="card card-rpg" role="link" aria-label="RPG v3 원작 완전판"><div class="card-shine"></div><div class="card-header"><div class="card-icon">&#x2728;</div><div class="card-title-wrap"><h2>RPG v3 원작 완전판</h2><span class="tag">포켓몬식 오픈월드</span></div></div><p>시즌 1~5 + 극장판 전편! 티니핑 41종 도감, 체육관 8개, 제니 최종전!</p><div class="card-features"><span class="feature">6 Act</span><span class="feature">20 맵</span><span class="feature">도감 41종</span><span class="feature">체육관 8</span><span class="feature">진화/레전드</span></div></a>
+    <a href="hatcuping-unified.html" class="card card-rpg" role="link" aria-label="UNIFIED v4 통합판"><span class="new-badge">NEW</span><div class="card-shine"></div><div class="card-header"><div class="card-icon">&#x1F496;</div><div class="card-title-wrap"><h2>UNIFIED v4 통합판</h2><span class="tag">3게임 융합</span></div></div><p>사랑의 하츄핑 영화 스토리! 올인원 게임!</p><div class="card-features"><span class="feature">6 Act</span><span class="feature">5 엔진</span><span class="feature">타이틀 화면</span><span class="feature">협력 최종전</span></div></a>
+  </nav>
+  <div class="stats-section" id="statsSection" aria-label="플레이 통계">
+    <div class="stats-title">&#x1F4CA; 플레이 통계</div>
+    <div class="stats-grid">
+      <div class="stat-item">총 플레이: <span class="stat-val" id="statPlayTime">0분</span></div>
+      <div class="stat-item">클리어: <span class="stat-val" id="statClears">0회</span></div>
+      <div class="stat-item">사망: <span class="stat-val" id="statDeaths">0회</span></div>
+      <div class="stat-item">업적: <span class="stat-val" id="statAchieve">0/12</span></div>
+    </div>
   </div>
-
-  <div class="footer">
+  <div class="recent-play" id="recentPlay" aria-label="최근 플레이"><div class="recent-play-title">최근 플레이</div><div id="recentContent"></div></div>
+  <div class="footer" role="contentinfo">
     <p>이모션 왕국에서 펼쳐지는 사랑과 우정의 이야기</p>
-    <p class="version">v5.0 | &copy; PRIME Holdings NEXTERA+PRISM</p>
+    <p class="version">v6.0 | &copy; PRIME Holdings NEXTERA+PRISM</p>
     <button class="pwa-install-btn" id="pwaInstallBtn">앱으로 설치하기</button>
   </div>
 </div>
-
 <script>
-const container=document.getElementById('sparkles');
-const colors=['#FF5FA2','#FFB8D9','#B066FF','#FFE44D','#88DDFF','#FF8EC4'];
-const shapes=['circle','star','heart'];
-function createSparkle(){
-  const s=document.createElement('div');
-  s.className='sparkle';
-  s.style.left=Math.random()*100+'%';
-  const color=colors[Math.floor(Math.random()*colors.length)];
-  s.style.background=color;
-  s.style.boxShadow='0 0 6px '+color;
-  s.style.animationDuration=(5+Math.random()*8)+'s';
-  s.style.animationDelay=Math.random()*5+'s';
-  const size=2+Math.random()*6;
-  s.style.width=size+'px';
-  s.style.height=size+'px';
-  container.appendChild(s);
-  setTimeout(()=>s.remove(),15000);
-}
-setInterval(createSparkle,350);
-for(let i=0;i<12;i++) createSparkle();
-
-// Parallax on mouse
-document.addEventListener('mousemove',e=>{
-  const x=(e.clientX/window.innerWidth-.5)*8;
-  const y=(e.clientY/window.innerHeight-.5)*8;
-  document.querySelector('.content').style.transform=
-    'translate('+x+'px,'+y+'px)';
-});
-
-// --- Recent Play (localStorage) ---
-const gameNames={
-  'hatcuping-game-v2.html':'탈출 어드벤처 v2',
-  'hatcuping-rpg-v2.html':'RPG 대모험 v2',
-  'rpg-v3/index.html':'RPG v3 원작 완전판',
-  'hatcuping-unified.html':'UNIFIED v4 통합판'
-};
-function loadRecent(){
-  try{
-    const d=JSON.parse(localStorage.getItem('hatcuping_recent'));
-    if(d&&d.href&&d.time){
-      const el=document.getElementById('recentPlay');
-      const ct=document.getElementById('recentContent');
-      const name=gameNames[d.href]||d.href;
-      const ago=timeAgo(d.time);
-      ct.innerHTML='<a href="'+d.href+'">'+name+'</a><span class="recent-time">'+ago+'</span>';
-      el.classList.add('show');
-    }
-  }catch(e){}
-}
-function timeAgo(ts){
-  const diff=Date.now()-ts;
-  const m=Math.floor(diff/60000);
-  if(m<1) return '방금 전';
-  if(m<60) return m+'분 전';
-  const h=Math.floor(m/60);
-  if(h<24) return h+'시간 전';
-  const dd=Math.floor(h/24);
-  return dd+'일 전';
-}
-function saveRecent(href){
-  try{localStorage.setItem('hatcuping_recent',JSON.stringify({href:href,time:Date.now()}));}catch(e){}
-}
-document.querySelectorAll('.card').forEach(c=>{
-  c.addEventListener('click',()=>{
-    const href=c.getAttribute('href');
-    if(href) saveRecent(href);
-  });
-});
-loadRecent();
-
-// --- Keyboard Navigation ---
-(function(){
-  const cards=Array.from(document.querySelectorAll('.card'));
-  let kbIdx=-1;
-  function updateKb(){
-    cards.forEach((c,i)=>{
-      if(i===kbIdx) c.classList.add('kb-selected');
-      else c.classList.remove('kb-selected');
-    });
-    if(kbIdx>=0) cards[kbIdx].scrollIntoView({block:'nearest',behavior:'smooth'});
-  }
-  document.addEventListener('keydown',e=>{
-    if(e.key==='ArrowDown'||e.key==='ArrowRight'){
-      e.preventDefault();
-      kbIdx=Math.min(kbIdx+1,cards.length-1);
-      updateKb();
-    }else if(e.key==='ArrowUp'||e.key==='ArrowLeft'){
-      e.preventDefault();
-      kbIdx=Math.max(kbIdx-1,0);
-      updateKb();
-    }else if(e.key==='Enter'&&kbIdx>=0){
-      e.preventDefault();
-      cards[kbIdx].click();
-    }
-  });
-})();
-
-// --- PWA Install Prompt ---
-(function(){
-  let deferredPrompt=null;
-  const btn=document.getElementById('pwaInstallBtn');
-  window.addEventListener('beforeinstallprompt',e=>{
-    e.preventDefault();
-    deferredPrompt=e;
-    if(btn) btn.style.display='inline-block';
-  });
-  if(btn){
-    btn.addEventListener('click',()=>{
-      if(!deferredPrompt) return;
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(r=>{
-        deferredPrompt=null;
-        btn.style.display='none';
-      });
-    });
-  }
-})();
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').then(r=>{console.log('[SW] registered',r.scope)}).catch(e=>console.warn('[SW] fail',e))}
+(function(){const body=document.body,toggle=document.getElementById('darkToggle'),icon=document.getElementById('darkIcon'),label=document.getElementById('darkLabel');function setDark(d){body.classList.toggle('dark',d);icon.textContent=d?'☀️':'🌙';label.textContent=d?'라이트모드':'다크모드';try{localStorage.setItem('hatcuping_darkmode',d?'1':'0')}catch(e){};document.querySelector('meta[name=theme-color]').content=d?'#1a0a2e':'#FFF0F8'}try{const s=localStorage.getItem('hatcuping_darkmode');if(s==='1')setDark(true);else if(s===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)setDark(true)}catch(e){}toggle.addEventListener('click',()=>setDark(!body.classList.contains('dark')))})();
+(function(){const btns=document.querySelectorAll('.diff-btn');let cd='normal';try{const s=localStorage.getItem('hatcuping_difficulty');if(s)cd=s}catch(e){}btns.forEach(b=>{b.classList.toggle('active',b.dataset.diff===cd);b.setAttribute('aria-checked',b.dataset.diff===cd?'true':'false');b.addEventListener('click',()=>{btns.forEach(bb=>{bb.classList.remove('active');bb.setAttribute('aria-checked','false')});b.classList.add('active');b.setAttribute('aria-checked','true');cd=b.dataset.diff;try{localStorage.setItem('hatcuping_difficulty',cd)}catch(e){}})})})();
+(function(){const AD=[{id:'a_first_clear',name:'첫 클리어',desc:'스테이지를 처음 클리어!'},{id:'a_no_death',name:'노데스 클리어',desc:'사망 없이 3스테이지 클리어'},{id:'a_combo10',name:'콤보 마스터',desc:'콤보 10회 달성'},{id:'a_star3',name:'별 수집가',desc:'스타 3회 획득'},{id:'a_boss3',name:'보스 헌터',desc:'보스 3회 처치'},{id:'a_all_stage',name:'완전 클리어',desc:'전 스테이지 클리어'},{id:'a_checkpoint10',name:'안전 제일',desc:'체크포인트 10회 통과'},{id:'a_nodeathrun',name:'무적 러너',desc:'사망 없이 3스테이지 연속'},{id:'a_coin100',name:'부자 로미',desc:'하트 100개 수집'},{id:'a_speedrun',name:'스피드 러너',desc:'30초 내 스테이지 클리어'},{id:'a_combo20',name:'콤보 레전드',desc:'콤보 20회 달성'},{id:'a_hidden',name:'비밀 탐험가',desc:'히든 루트 발견'}];function getA(){try{return JSON.parse(localStorage.getItem('hatcuping_achievements'))||{}}catch(e){return {}}}function upd(){const a=getA(),c=Object.keys(a).length;document.getElementById('achieveCount').textContent=c+'/'+AD.length;document.getElementById('statAchieve').textContent=c+'/'+AD.length}upd();document.getElementById('achieveBtn').addEventListener('click',()=>{const a=getA();const l=AD.map(d=>(a[d.id]?'✅':'🔒')+' '+d.name+' - '+d.desc);alert('업적 ('+Object.keys(a).length+'/'+AD.length+')\n\n'+l.join('\n'))})})();
+(function(){function getS(){try{return JSON.parse(localStorage.getItem('hatcuping_stats'))||{playTime:0,clears:0,deaths:0}}catch(e){return{playTime:0,clears:0,deaths:0}}}const s=getS(),el=document.getElementById('statsSection');if(s.playTime>0||s.clears>0||s.deaths>0){el.classList.add('show');const m=Math.floor(s.playTime/60);document.getElementById('statPlayTime').textContent=m>60?Math.floor(m/60)+'시간 '+(m%60)+'분':m+'분';document.getElementById('statClears').textContent=s.clears+'회';document.getElementById('statDeaths').textContent=s.deaths+'회'}})();
+const container=document.getElementById('sparkles'),colors=['#FF5FA2','#FFB8D9','#B066FF','#FFE44D','#88DDFF','#FF8EC4'];function createSparkle(){const s=document.createElement('div');s.className='sparkle';s.style.left=Math.random()*100+'%';const c=colors[Math.floor(Math.random()*colors.length)];s.style.background=c;s.style.boxShadow='0 0 6px '+c;s.style.animationDuration=(5+Math.random()*8)+'s';s.style.animationDelay=Math.random()*5+'s';const sz=2+Math.random()*6;s.style.width=sz+'px';s.style.height=sz+'px';container.appendChild(s);setTimeout(()=>s.remove(),15000)}setInterval(createSparkle,350);for(let i=0;i<12;i++)createSparkle();
+document.addEventListener('mousemove',e=>{const x=(e.clientX/window.innerWidth-.5)*8,y=(e.clientY/window.innerHeight-.5)*8;document.querySelector('.content').style.transform='translate('+x+'px,'+y+'px)'});
+const gameNames={'hatcuping-game-v2.html':'탈출 어드벤처 v2','hatcuping-rpg-v2.html':'RPG 대모험 v2','rpg-v3/index.html':'RPG v3 원작 완전판','hatcuping-unified.html':'UNIFIED v4 통합판'};function loadRecent(){try{const d=JSON.parse(localStorage.getItem('hatcuping_recent'));if(d&&d.href&&d.time){const el=document.getElementById('recentPlay'),ct=document.getElementById('recentContent'),name=gameNames[d.href]||d.href,ago=timeAgo(d.time);ct.innerHTML='<a href="'+d.href+'">'+name+'</a><span class="recent-time">'+ago+'</span>';el.classList.add('show')}}catch(e){}}function timeAgo(ts){const d=Date.now()-ts,m=Math.floor(d/60000);if(m<1)return'방금 전';if(m<60)return m+'분 전';const h=Math.floor(m/60);if(h<24)return h+'시간 전';return Math.floor(h/24)+'일 전'}function saveRecent(h){try{localStorage.setItem('hatcuping_recent',JSON.stringify({href:h,time:Date.now()}))}catch(e){}}document.querySelectorAll('.card').forEach(c=>{c.addEventListener('click',()=>{const h=c.getAttribute('href');if(h)saveRecent(h)})});loadRecent();
+(function(){const cards=Array.from(document.querySelectorAll('.card'));let kbIdx=-1;function upKb(){cards.forEach((c,i)=>{if(i===kbIdx)c.classList.add('kb-selected');else c.classList.remove('kb-selected')});if(kbIdx>=0)cards[kbIdx].scrollIntoView({block:'nearest',behavior:'smooth'})}document.addEventListener('keydown',e=>{if(e.key==='?'||e.key==='/'){e.preventDefault();document.getElementById('kbHelp').classList.toggle('show');return}if((e.key==='d'||e.key==='D')&&!e.ctrlKey&&!e.metaKey){document.getElementById('darkToggle').click();return}if(e.key==='1'){document.querySelector('[data-diff=easy]').click();return}if(e.key==='2'){document.querySelector('[data-diff=normal]').click();return}if(e.key==='3'){document.querySelector('[data-diff=hard]').click();return}if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();kbIdx=Math.min(kbIdx+1,cards.length-1);upKb()}else if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();kbIdx=Math.max(kbIdx-1,0);upKb()}else if(e.key==='Enter'&&kbIdx>=0){e.preventDefault();cards[kbIdx].click()}else if(e.key==='Escape'){document.getElementById('kbHelp').classList.remove('show')}})})();
+document.getElementById('kbHelpBtn').addEventListener('click',()=>{document.getElementById('kbHelp').classList.toggle('show')});document.getElementById('kbHelpClose').addEventListener('click',()=>{document.getElementById('kbHelp').classList.remove('show')});
+(function(){let dp=null;const btn=document.getElementById('pwaInstallBtn');window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;if(btn)btn.style.display='inline-block'});if(btn){btn.addEventListener('click',()=>{if(!dp)return;dp.prompt();dp.userChoice.then(r=>{dp=null;btn.style.display='none'})})}})();
 </script>
 </body>
 </html>
