@@ -130,3 +130,102 @@
 - `hatcuping-rpg-v2.html`: +101줄 (CDN제거+BGM5종+몬스터3종+데미지숫자+전투연출+저장표시+맵전환)
 - `hatcuping-unified.html`: 폰트CDN제거+시스템폰트 전환
 - **총 303줄 추가, 47줄 수정, 4파일 변경**
+
+---
+
+## [AUTO] 2026-05-10 hatcuping-game v6.0
+
+### 1차 벤치마킹 분석 (슈퍼마리오 / 포켓몬 / 젤다 대비)
+
+| # | 항목 | 경쟁작 수준 | 이전 상태 | v6.0 개선 후 |
+|---|------|-----------|----------|------------|
+| 1 | 서비스 워커 | 오프라인 완전 지원 | 없음 | **sw.js 신규 — Network-first HTML, Cache-first JS, 전파일 프리캐시** |
+| 2 | 다크/라이트 모드 | 수동 전환 | prefers-color-scheme만 | **수동 토글 버튼 + localStorage 저장** |
+| 3 | 사운드 볼륨 컨트롤 | 음량 슬라이더 | 음소거만 | **BGM/SFX 분리 슬라이더 + localStorage 저장** |
+| 4 | 업적 시스템 | 도전과제 수십개 | 없음 | **12개 업적 + 토스트 알림** |
+| 5 | 플레이 통계 | 상세 통계 | 없음 | **플레이 타임/클리어/사망 횟수 추적** |
+| 6 | 난이도 선택 | 이지/노멀/하드 | 없음 | **3단계 난이도 (쉬움/보통/어려움)** |
+| 7 | 접근성(A11y) | ARIA/키보드 완전 지원 | 기본만 | **skip-to-content, ARIA landmarks/labels 강화** |
+| 8 | 일시정지 메뉴 | ESC로 풀 메뉴 | 없음 | **ESC → 계속/재시작/메인으로 + 볼륨 조절** |
+| 9 | 튜토리얼/도움말 | 인게임 가이드 | 없음 | **첫 플레이 시 조작법 오버레이 + 키보드 단축키 안내** |
+| 10 | 히트 스톱/이펙트 | 풍부한 파티클 | 기본 | **히트 스톱 3프레임 정지** |
+
+### 2차 개발팀 작업 내역
+
+#### 신규 파일
+- **sw.js**: 서비스 워커 신규 생성
+  - 캐시명: `hatcuping-v6`
+  - HTML: Network-first (오프라인 시 캐시 폴백)
+  - JS/에셋: Cache-first (빠른 로딩)
+  - 프리캐시: index.html, 3개 게임 HTML, unified 디렉토리 전체 JS 파일
+  - 구 캐시 자동 정리
+
+#### index.html (런처 v6.0)
+- **다크/라이트 모드 수동 토글**: 🌙/☀️ 버튼 + localStorage 저장, theme-color 메타태그 동적 전환
+- **난이도 선택 UI**: 쉬움/보통/어려움 라디오 그룹 + localStorage 저장 (게임에서 참조)
+- **업적 뱃지**: 잠금해제 업적 수 표시, 클릭 시 전체 목록 팝업
+- **플레이 통계 섹션**: 총 플레이 타임, 클리어 수, 사망 횟수, 업적 수
+- **서비스 워커 등록**: navigator.serviceWorker.register
+- **접근성 강화**: skip-to-content 링크, role="main"/"toolbar"/"radiogroup"/"contentinfo", aria-label 전역
+- **키보드 단축키 안내**: ? 키 → 모달 (게임 선택/다크모드/난이도 단축키)
+- **버전 v6.0 업데이트**
+
+#### hatcuping-game-v2.html (플랫포머 v6.0)
+- **볼륨 슬라이더**: BGM/SFX 분리 볼륨 + localStorage 저장
+  - `_osc()` 함수에 `_sfxVol` 적용
+  - BGM 루프에 `_bgmVol` 적용
+  - 일시정지 메뉴에서 드래그로 조절
+- **일시정지 메뉴 (ESC)**: 계속하기 / 다시 시작 / 메인으로 3버튼 + 볼륨 슬라이더
+- **업적 시스템 12개**:
+  - `a_first_clear`: 첫 클리어
+  - `a_no_death`: 노데스 클리어 (사망 없이 3스테이지)
+  - `a_combo10`: 콤보 10회 달성
+  - `a_star3`: 별 3회 획득
+  - `a_boss3`: 보스 3회 처치
+  - `a_all_stage`: 전 스테이지 클리어
+  - `a_checkpoint10`: 체크포인트 10회 통과
+  - `a_nodeathrun`: 무적 러너 (사망 없이 3스테이지 연속)
+  - `a_coin100`: 하트 100개 수집
+  - `a_speedrun`: 30초 내 스테이지 클리어
+  - `a_combo20`: 콤보 레전드 (20회)
+  - `a_hidden`: 비밀 탐험가
+- **난이도 적용**: 적 속도 배율 (0.7x/1x/1.4x), 초기 라이프 (9/7/5)
+- **히트 스톱 효과**: 적 밟을 때 3프레임 게임 루프 정지 (타격감 강화)
+- **조작법 튜토리얼**: 첫 플레이 시 풀스크린 오버레이 (터치하여 닫기)
+- **통계 추적**: 사망 횟수, 클리어 수, 코인 수, 최대 콤보 → localStorage 누적
+
+#### hatcuping-rpg-v2.html (RPG v6.0)
+- **볼륨 슬라이더**: AM (효과음)에 `_sfxVol`, BGM playNote에 `_bgmVol` 적용
+- **일시정지 메뉴 (ESC)**: 계속하기 / 재시작 / 메인으로 3버튼 + BGM/SFX 슬라이더
+- **난이도 적용**: 적 HP/ATK 배율 (0.7x/1x/1.4x) — `mkCh()` 함수에서 적/아군 분기
+- **업적 체크**: 레벨 10 달성, 보스 처치, 포획 10회 등 자동 추적
+- **조작법 튜토리얼**: 첫 전투 시 가이드 오버레이 (전투 시스템 설명)
+- **통계 추적**: 플레이 타임 누적 저장
+- **ESC 키보드 일시정지**: keydown 이벤트에서 Escape 처리
+
+#### manifest.json
+- `description` v6.0 내용으로 갱신
+- `id` 필드 추가 (`hatcuping-game-v6`)
+
+### 3차 품질 검증 결과
+
+| 항목 | 결과 |
+|------|------|
+| HTML 구조 (index.html) | **PASS** — 1 script 블록 |
+| HTML 구조 (hatcuping-game-v2.html) | **PASS** — 3 script 블록 (sprites, env, main) |
+| HTML 구조 (hatcuping-rpg-v2.html) | **PASS** — 3 script 블록 |
+| sw.js 구조 | **PASS** — install/activate/fetch 핸들러 |
+| 외부 CDN 검증 | **0건** |
+| 개인정보 노출 검증 | 없음 |
+| 파일 삭제 | 없음 |
+| HTML entities 따옴표 | 준수 (&amp;quot; 사용) |
+| ARIA 접근성 | skip-link, role, aria-label 추가 |
+
+### 변경 파일 요약
+- `sw.js`: **신규** (서비스 워커, 오프라인 지원)
+- `index.html`: +200줄 (다크모드 토글+난이도+업적+통계+접근성+키보드도움말+SW등록)
+- `hatcuping-game-v2.html`: +100줄 (볼륨슬라이더+일시정지메뉴+업적12개+난이도+히트스톱+튜토리얼+통계)
+- `hatcuping-rpg-v2.html`: +80줄 (볼륨슬라이더+일시정지메뉴+난이도+업적+튜토리얼+통계)
+- `manifest.json`: description/id 갱신
+- `AUTO_REPORT.md`: v6.0 보고서 추가
+- **총 6파일 변경 (1파일 신규), ~380줄 추가**
