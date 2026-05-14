@@ -1,5 +1,5 @@
-// Service Worker - hatcuping-game v6.0
-const CACHE_NAME = 'hatcuping-v6';
+// Service Worker - hatcuping-game v7.0
+const CACHE_NAME = 'hatcuping-v7';
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -34,7 +34,6 @@ const PRECACHE_URLS = [
   './unified/story/act5_forest.js'
 ];
 
-// Install: precache all essential files
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
@@ -43,7 +42,6 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activate: clean up old caches
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
@@ -52,12 +50,10 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch: Network-first for HTML, Cache-first for JS/other assets
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   if (event.request.method !== 'GET') return;
 
-  // HTML files: network-first with cache fallback
   if (event.request.mode === 'navigate' || url.pathname.endsWith('.html')) {
     event.respondWith(
       fetch(event.request).then(response => {
@@ -71,7 +67,6 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // JS and other assets: cache-first with network fallback
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) return cached;
