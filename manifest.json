@@ -1,7 +1,7 @@
 {
   "name": "사랑의 하츄핑",
   "short_name": "하츄핑",
-  "description": "사랑의 하츄핑 v11.0 - 플랫포머 액션 & 턴제 RPG & 오픈월드 & UNIFIED 통합판. 업적 70개, 타임어택 3종, 파워업도감 8종, 아케이드 3종, 백과사전 40항목, 퀴즈 45문!",
+  "description": "사랑의 하츄핑 v12.0 - 플랫포머 액션 & 턴제 RPG & 오픈월드 & UNIFIED 통합판. 업적 82개, 티니핑카드 24종, 보스러시 5R, XP레벨 30, 주크박스 10곡, 가이드센터 12개, 모험일지, 퀴즈 60문!",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
@@ -9,7 +9,7 @@
   "theme_color": "#FF5FA2",
   "categories": ["games", "entertainment"],
   "lang": "ko",
-  "id": "hatcuping-game-v11",
+  "id": "hatcuping-game-v12",
   "icons": [
     {
       "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FFF0F8'/%3E%3Cpath d='M32 54C20 47 10 38 10 26c0-9 7-16 16-16 4 0 6 2 6 2s2-2 6-2c9 0 16 7 16 16 0 12-10 21-22 28z' fill='%23FF5FA2'/%3E%3Cpath d='M22 20l4 6-3 1 5 8' stroke='%23FFE44D' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='42' cy='18' r='4' fill='%23FFE44D'/%3E%3C/svg%3E",
@@ -20,49 +20,39 @@
   ],
   "shortcuts": [
     {
-      "name": "캐릭터 도감",
-      "url": "./index.html#encyc",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF5FA2'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📖%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+      "name": "월드맵",
+      "url": "./index.html#worldmap",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234CAF50'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🗺%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     },
     {
-      "name": "미니게임",
-      "url": "./index.html#minigame",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23B066FF'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🧠%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+      "name": "티니핑 카드",
+      "url": "./index.html#cards",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF9800'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🃏%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     },
     {
-      "name": "보스 배틀",
-      "url": "./index.html#boss",
+      "name": "보스 러시",
+      "url": "./index.html#bossrush",
       "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23EF4444'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E⚔️%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     },
     {
-      "name": "스킬 트리",
-      "url": "./index.html#skill",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234CAF50'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🌳%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+      "name": "주크박스",
+      "url": "./index.html#jukebox",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239C27B0'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🎶%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     },
     {
-      "name": "카드 매칭",
-      "url": "./index.html#cardmatch",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239C27B0'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🃏%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+      "name": "가이드 센터",
+      "url": "./index.html#guide",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232196F3'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📖%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     },
     {
-      "name": "사운드트랙",
-      "url": "./index.html#soundtrack",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF9800'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🎶%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+      "name": "백과사전",
+      "url": "./index.html#encyclopedia",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF5FA2'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📚%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     },
     {
       "name": "타임어택",
       "url": "./index.html#timeattack",
       "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F44336'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E⏱%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
-    },
-    {
-      "name": "백과사전",
-      "url": "./index.html#encyclopedia",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232196F3'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📚%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
-    },
-    {
-      "name": "아케이드",
-      "url": "./index.html#arcade",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF9800'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🕹%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     }
   ]
 }
