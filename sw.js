@@ -1,5 +1,5 @@
-// Service Worker - hatcuping-game v13.0
-const CACHE_NAME = 'hatcuping-v13';
+// Service Worker - hatcuping-game v14.0
+const CACHE_NAME = 'hatcuping-v14';
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ const PRECACHE_URLS = [
   './v11_patch.js',
   './v12_patch.js',
   './v13_patch.js',
+  './v14_patch.js',
   './hatcuping-game-v2.html',
   './hatcuping-rpg-v2.html',
   './hatcuping-unified.html',
