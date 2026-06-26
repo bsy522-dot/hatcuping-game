@@ -1,7 +1,7 @@
 {
   "name": "사랑의 하츄핑",
   "short_name": "하츄핑",
-  "description": "사랑의 하츄핑 v14.0 - 플랫포머 액션 & 턴제 RPG & 오픈월드 & UNIFIED 통합판. 업적 106개, 마법주문서 12종, 티니핑도감 12종, 스토리갤러리 12편, 트레이닝도장Canvas, 감정날씨 8종, 우정게시판 12칸, 퀴즈 90문!",
+  "description": "사랑의 하츄핑 v15.0 - 플랫포머 액션 & 턴제 RPG & 오픈월드 & UNIFIED 통합판. 업적 118개, 진화체인 12종, 속성상성표 8종, 파티편성기, 아케이드스코어보드 8종, 시즌이벤트 4계절, OST뮤직플레이어 12곡, 아바타메이커Canvas, 전투력대시보드6축Radar, 퀴즈 105문!",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
@@ -9,7 +9,7 @@
   "theme_color": "#FF5FA2",
   "categories": ["games", "entertainment"],
   "lang": "ko",
-  "id": "hatcuping-game-v14",
+  "id": "hatcuping-game-v15",
   "icons": [
     {
       "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FFF0F8'/%3E%3Cpath d='M32 54C20 47 10 38 10 26c0-9 7-16 16-16 4 0 6 2 6 2s2-2 6-2c9 0 16 7 16 16 0 12-10 21-22 28z' fill='%23FF5FA2'/%3E%3Cpath d='M22 20l4 6-3 1 5 8' stroke='%23FFE44D' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='42' cy='18' r='4' fill='%23FFE44D'/%3E%3C/svg%3E",
@@ -20,44 +20,44 @@
   ],
   "shortcuts": [
     {
-      "name": "크래프팅 공방",
-      "url": "./index.html#crafting",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF9800'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🔨%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+      "name": "진화 체인",
+      "url": "./index.html#evolution",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234CAF50'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🧬%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     },
     {
-      "name": "펫 키우기",
-      "url": "./index.html#pet",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E91E63'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🐰%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+      "name": "속성 상성표",
+      "url": "./index.html#compat",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF5722'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E⚔️%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     },
     {
-      "name": "콤보 도장",
-      "url": "./index.html#combo",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F44336'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🥋%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+      "name": "파티 편성기",
+      "url": "./index.html#party",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232196F3'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E👥%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     },
     {
-      "name": "감정일기",
-      "url": "./index.html#diary",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239C27B0'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📔%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+      "name": "아케이드 스코어보드",
+      "url": "./index.html#arcade",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF9800'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🕹️%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     },
     {
-      "name": "미니퀘스트",
-      "url": "./index.html#quest",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234CAF50'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📋%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+      "name": "시즌 이벤트",
+      "url": "./index.html#season",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E91E63'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🌸%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     },
     {
-      "name": "티니핑 인연도",
-      "url": "./index.html#affinity",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF5FA2'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E💕%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+      "name": "OST 뮤직플레이어",
+      "url": "./index.html#ost",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239C27B0'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🎵%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     },
     {
-      "name": "월드맵",
-      "url": "./index.html#worldmap",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232196F3'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🗺%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+      "name": "아바타 메이커",
+      "url": "./index.html#avatar",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23673AB7'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🎨%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     },
     {
-      "name": "마법 주문서",
-      "url": "./index.html#spellbook",
-      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236366F1'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🪄%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+      "name": "전투력 대시보드",
+      "url": "./index.html#battle",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F44336'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E💪%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     }
   ]
 }
