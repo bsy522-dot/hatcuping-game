@@ -1,7 +1,7 @@
 {
   "name": "사랑의 하츄핑",
   "short_name": "하츄핑",
-  "description": "사랑의 하츄핑 v15.0 - 플랫포머 액션 & 턴제 RPG & 오픈월드 & UNIFIED 통합판. 업적 118개, 요리교실 12종, 코스튬 12종, 스킬트리, 우체통 12통, 운세, 펫레이싱Canvas, 음악스튜디오Canvas, 백과사전v2 60항목, 퀴즈 105문!",
+  "description": "사랑의 하츄핑 v16.0 - 플랫포머 액션 & 턴제 RPG & 오픈월드 & UNIFIED 통합판. 업적 130개, 미로탐험Canvas3단계, 하츄핑농장8종, 출석캘린더Canvas30일, 캐릭터관계도Canvas12인, 컬러링북12종, 리듬게임6곡Canvas, 퍼즐슬라이더3x3&4x4, 명대사갤러리20선, 퀴즈 120문!",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
@@ -9,7 +9,7 @@
   "theme_color": "#FF5FA2",
   "categories": ["games", "entertainment"],
   "lang": "ko",
-  "id": "hatcuping-game-v15",
+  "id": "hatcuping-game-v16",
   "icons": [
     {
       "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FFF0F8'/%3E%3Cpath d='M32 54C20 47 10 38 10 26c0-9 7-16 16-16 4 0 6 2 6 2s2-2 6-2c9 0 16 7 16 16 0 12-10 21-22 28z' fill='%23FF5FA2'/%3E%3Cpath d='M22 20l4 6-3 1 5 8' stroke='%23FFE44D' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='42' cy='18' r='4' fill='%23FFE44D'/%3E%3C/svg%3E",
@@ -78,6 +78,46 @@
       "name": "음악 스튜디오",
       "url": "./index.html#musicstudio",
       "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239C27B0'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🎹%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "미로 탐험",
+      "url": "./index.html#maze",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234A90D9'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🏰%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "하츄핑 농장",
+      "url": "./index.html#farm",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%238BC34A'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🌾%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "출석 캘린더",
+      "url": "./index.html#attend",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF7043'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📅%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "캐릭터 관계도",
+      "url": "./index.html#relation",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23AB47BC'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🔗%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "컬러링 북",
+      "url": "./index.html#coloring",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E91E63'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🎨%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "리듬 게임",
+      "url": "./index.html#rhythm",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2300BCD4'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🎵%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "퍼즐 슬라이더",
+      "url": "./index.html#puzzle",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23607D8B'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🧩%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "명대사 갤러리",
+      "url": "./index.html#quote",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FFD54F'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E💬%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     }
   ]
 }
