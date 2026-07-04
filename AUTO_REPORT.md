@@ -1013,3 +1013,68 @@
 - `manifest.json`: id/description v16 갱신, shortcuts 8개 추가 (총 20개)
 - `AUTO_REPORT.md`: v16.0 보고서 추가
 - **총 5파일 변경 (1파일 신규), ~1350줄 추가**
+
+---
+
+## [AUTO] 2026-07-04 hatcuping-game v17.0
+
+### Stage 1: Benchmarking (10%)
+**Target**: Super Mario (platformer), Pokemon RPG (RPG)
+| 비교 항목 | 경쟁작 | hatcuping v16 | v17 개선 |
+|-----------|--------|---------------|----------|
+| 수집 시스템 | 스타/코인/뱃지 | 업적 130개 | 스탬프랠리20종Canvas (142 업적) |
+| 미니게임 다양성 | 10+ 미니게임 | 8종 미니게임 | +8종 (카드매칭,보물찾기,끝말잇기 등) |
+| 캐릭터 커스터마이징 | 의상/악세서리 | 없음 | 코디네이션스튜디오Canvas 추가 |
+| 소셜/관계 기능 | 우정 시스템 | 인연도 | 우정파워6축RadarCanvas 추가 |
+| 감정 표현 | 감정 이모트 | 감정일기 텍스트 | 감정날씨예보6종Canvas+7일히스토리 |
+| 농장/정원 | 꽃 키우기 | 농장8종 | 마법의정원10꽃Canvas 추가 |
+| 퍼즐 게임 | 다양한 퍼즐 | 퍼즐슬라이더 | +카드매칭4x4+보물찾기8x6 |
+| 단어 게임 | 없음 | 없음 | 끝말잇기AI대전Canvas 추가 |
+| 퀴즈 수 | 100+ | 120문 | 135문 (+15) |
+| 사운드 | 풀 BGM/SFX | Web Audio SFX | +12종 SFX (stamp,garden,memory,emotion,treasure,dress) |
+
+### Stage 2: Development (50%)
+**v17_patch.js** (1612줄, 64.8KB, IIFE self-contained)
+
+#### 신규 기능 8종:
+1. **스탬프 랠리** (`openStampRally`) - Canvas 600x340, 20종 티니핑 스탬프, 컬렉션 진행률 표시
+2. **마법의 정원** (`openMagicGarden`) - Canvas 560x320, 10종 꽃, 6화분, 물주기/심기/수확 시뮬레이션
+3. **캐릭터 카드매칭** (`openMemoryMatch`) - Canvas 480x360, 4x4 그리드, 8쌍 캐릭터 매칭
+4. **감정 날씨 예보** (`openEmotionWeather`) - Canvas 560x280, 6종 날씨, 7일 히스토리 기록
+5. **보물찾기** (`openTreasureHunt`) - Canvas 520x340, 8x6 그리드, 12회 파기, 8종 보물
+6. **코디네이션 스튜디오** (`openDressUpStudio`) - Canvas 400x380, 머리/눈/옷/액세서리 커스터마이징
+7. **끝말잇기 AI대전** (`openWordChain`) - Canvas 500x200, AI 상대, 한국어 단어 체인
+8. **우정 파워 미터** (`openFriendshipMeter`) - Canvas 440x400, 6축 레이더 차트, S~D 등급
+
+#### 추가 컨텐츠:
+- **업적**: +12개 (130→142) - 스탬프/정원/카드매칭/감정날씨/보물찾기/코디/끝말잇기/탐험가
+- **퀴즈**: +15문 (120→135) - v17 기능 관련 문제
+- **SFX**: +12종 - stamp_collect/stamp_complete/garden_plant/garden_water/memory_flip/memory_match/emotion_select/emotion_save/treasure_dig/treasure_find/dress_change/v17_feature
+- **키보드 단축키**: +8종 (Shift+A/B/C/E/F/G/N/W)
+- **하단 네비게이션**: 8버튼 (스탬프/정원/카드매칭/감정날씨/보물/코디/끝말잇기/우정)
+- **뉴스 섹션**: v17.0 업데이트 항목 추가
+- **푸터**: v17.0 정보 갱신
+- **메타 태그**: 동적 v17.0 업데이트
+
+### Stage 3: Quality Verification (30%)
+| 검증 항목 | 결과 | 상세 |
+|-----------|------|------|
+| JS 문법 검사 (node -c) | PASS | 오류 없음 |
+| JS 파싱 검사 (new Function) | PASS | 런타임 파싱 성공 |
+| 괄호 밸런스 | PASS | 1506 open = 1506 close |
+| 외부 CDN 참조 | PASS | 0개 (규칙 준수) |
+| 개인정보 노출 | PASS | 0개 (규칙 준수) |
+| IIFE 캡슐화 | PASS | 전역 오염 없음 |
+| Dark Mode 대응 | PASS | isDarkV17() 전 기능 적용 |
+| localStorage 사용 | PASS | 6개 키 (stamps/garden/memory/emotion/treasure/wordchain) |
+| Web Audio API | PASS | 12종 SFX, 뮤트 지원 |
+| HTML entities 인코딩 | PASS | 한국어 텍스트 &#x 형식 |
+
+### Stage 4: Deployment (10%)
+**변경 파일:**
+- `v17_patch.js`: 신규 (1612줄, 64.8KB)
+- `index.html`: 메타태그/title/JSON-LD v17 갱신, script 태그 추가
+- `sw.js`: 캐시명 v17, PRECACHE_URLS에 v17_patch.js 추가
+- `manifest.json`: id/description v17 갱신, shortcuts 8개 추가 (총 28개)
+- `AUTO_REPORT.md`: v17.0 보고서 추가
+- **총 5파일 변경 (1파일 신규), ~1620줄 추가**
