@@ -1078,3 +1078,47 @@
 - `manifest.json`: id/description v17 갱신, shortcuts 8개 추가 (총 28개)
 - `AUTO_REPORT.md`: v17.0 보고서 추가
 - **총 5파일 변경 (1파일 신규), ~1620줄 추가**
+
+---
+
+## [AUTO] 2026-07-08 hatcuping-game v18.0
+
+### 1차: 벤치마킹 분석
+- **벤치마킹 대상**: Super Mario (닌텐도), Pokemon RPG (게임프리크)
+- **분석 항목**: 캐릭터 진화 시스템, 포션/아이템 제조, 배틀 메커니즘, 운세/타로, 뮤직/사운드, 스탯 비교, 시즌 이벤트, 월드맵 탐험
+- **적용 전략**: 포켓몬식 진화 연구소 + 마리오식 아이템 제조 시스템 융합, Canvas 기반 인터랙티브 UI, WebAudio API 사운드 엔진
+
+### 2차: 개발 (8개 Canvas 기능 + SFX + 퀴즈 + 업적)
+| 기능 | 상세 | 기술 |
+|------|------|------|
+| 진화 연구소 | 8캐릭터 진화체인, XP/레벨 시스템 | Canvas 2D, 파티클 이펙트 |
+| 마법 포션 제조소 | 10종 포션, 3재료 조합, 제조 애니메이션 | Canvas 2D, 진행바 |
+| 감정 에너지 배틀 | 6감정 속성, 타입 상성, HP바 전투 | Canvas 2D, 배틀 로직 |
+| 티니핑 타로 | 10장 타로카드, 일일운세, 카드 뒤집기 | Canvas 2D, 랜덤 선택 |
+| 뮤직 박스 | 8곡 오르골, 재생/정지, 시각화 | WebAudio API, Oscillator |
+| 캐릭터 스탯 비교 | 6축 Radar, 6인 비교, 동적 데이터 | Canvas 2D, Radar Chart |
+| 시즌 캘린더 | 12월 이벤트, 출석 보상, 월별 일정 | Canvas 2D, 그리드 |
+| 모험 월드맵 | 10지역 탐험, 잠금 해제, 경로 표시 | Canvas 2D, 인터랙티브 맵 |
+
+- **SFX 엔진**: 12종 효과음 (evolve, brew, battle, tarot, music, compare, calendar, map, victory, levelup, potion_done, card_flip)
+- **업적 추가**: 12개 (142 → 154)
+- **퀴즈 추가**: 15문항 (135 → 150)
+- **키보드 단축키**: 8종 (Shift+H/I/J/K/L/O/P/Q)
+- **하단 네비게이션**: 8버튼 z-index:901
+
+### 3차: 품질 검증
+| 항목 | 결과 |
+|------|------|
+| JS 문법 검사 (node --check) | PASS |
+| 중괄호 균형 { 331 } 331 | PASS |
+| 소괄호 균형 ( 944 ) 944 | PASS |
+| 대괄호 균형 [ 189 ] 189 | PASS |
+| 외부 CDN 참조 | 0 (PASS) |
+| 개인정보 노출 | 0 (PASS) |
+| 파일 크기 | 1,498줄 / 64,781 bytes |
+
+### 4차: 배포
+- **커밋**: [AUTO] 2026-07-08 hatcuping-game v18.0
+- **변경 파일**: v18_patch.js (신규), index.html, sw.js, manifest.json
+- **SW 캐시**: hatcuping-v17 → hatcuping-v18
+- **Manifest shortcuts**: 28 → 36 (+8)
