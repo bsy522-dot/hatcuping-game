@@ -1,7 +1,7 @@
 {
   "name": "사랑의 하츄핑",
   "short_name": "하츄핑",
-  "description": "사랑의 하츄핑 v20.0 - 플랫포머 액션 & 턴제 RPG & 오픈월드 & UNIFIED 통합판. 업적 178개, 배틀토너먼트8전사Canvas, 성격궁합6유형RadarCanvas, 파워업콤보연구소10레시피Canvas, 보스러시챌린지8보스Canvas, 경제시뮬레이터Canvas, 진화트리4가문Canvas, 모험성적표6지표Canvas, 월드맵진행8지역Canvas, 퀴즈 180문!",
+  "description": "사랑의 하츄핑 v21.0 - 플랫포머 액션 & 턴제 RPG & 오픈월드 & UNIFIED 통합판. 업적 190개, 뷰티콘테스트8인Canvas, 스탯훈련매니저6축RadarCanvas, 마법오라커스터마이저8종Canvas, 던전탐험로그10층Canvas, 유전형질연구소8형질Canvas, 배틀메모리게임Canvas, 시즌패스트래커30레벨Canvas, 요리대회8재료10레시피Canvas, 퀴즈 195문!",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
@@ -9,7 +9,7 @@
   "theme_color": "#FF5FA2",
   "categories": ["games", "entertainment"],
   "lang": "ko",
-  "id": "hatcuping-game-v20",
+  "id": "hatcuping-game-v21",
   "icons": [
     {
       "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FFF0F8'/%3E%3Cpath d='M32 54C20 47 10 38 10 26c0-9 7-16 16-16 4 0 6 2 6 2s2-2 6-2c9 0 16 7 16 16 0 12-10 21-22 28z' fill='%23FF5FA2'/%3E%3Cpath d='M22 20l4 6-3 1 5 8' stroke='%23FFE44D' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='42' cy='18' r='4' fill='%23FFE44D'/%3E%3C/svg%3E",
@@ -278,6 +278,46 @@
       "name": "월드맵 진행",
       "url": "./index.html#v20worldmap",
       "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232196F3'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🌍%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "뷰티 콘테스트",
+      "url": "./index.html#beautycontest",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E91E63'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E👑%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "스탯 훈련 매니저",
+      "url": "./index.html#stattrainer",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234CAF50'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E💪%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "마법 오라 커스터마이저",
+      "url": "./index.html#auracustom",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239C27B0'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E✨%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "던전 탐험 로그",
+      "url": "./index.html#dungeonlog",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23607D8B'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🏰%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "유전 형질 연구소",
+      "url": "./index.html#genetics",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234CAF50'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🧬%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "배틀 메모리 게임",
+      "url": "./index.html#battlememory",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232196F3'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🃏%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "시즌 패스 트래커",
+      "url": "./index.html#seasonpass",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF9800'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🎫%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "요리 대회",
+      "url": "./index.html#cookingcontest",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF6B35'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🍳%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     }
   ]
 }
