@@ -1,7 +1,7 @@
 {
   "name": "사랑의 하츄핑",
   "short_name": "하츄핑",
-  "description": "사랑의 하츄핑 v22.0 - 플랫포머 액션 & 턴제 RPG & 오픈월드 & UNIFIED 통합판. 업적 202개, 우정네트워크12인Canvas, 배틀전술시뮬레이터8전술RadarCanvas, 마법원소연금술6원소15조합Canvas, 모험퀘스트보드10일일Canvas, 캐릭터성장곡선Lv30Canvas, 보스공략가이드8보스6축Canvas, 팀조합최적화12캐릭시너지Canvas, 모험업적타임라인30일Canvas, 퀴즈 210문!",
+  "description": "사랑의 하츄핑 v23.0 - 플랫포머 액션 & 턴제 RPG & 오픈월드 & UNIFIED 통합판. 업적 214개, 챌린지룰렛12종Canvas, 콤보트리12노드Canvas, 유대감트래커10쌍Canvas, 파워업진화9단계Canvas, 난이도분석10스테이지Canvas, 전투력예측6캐릭Canvas, 감정에너지6종Canvas, 스코어보드8인Canvas, 퀴즈 225문!",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
@@ -9,7 +9,7 @@
   "theme_color": "#FF5FA2",
   "categories": ["games", "entertainment"],
   "lang": "ko",
-  "id": "hatcuping-game-v22",
+  "id": "hatcuping-game-v23",
   "icons": [
     {
       "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FFF0F8'/%3E%3Cpath d='M32 54C20 47 10 38 10 26c0-9 7-16 16-16 4 0 6 2 6 2s2-2 6-2c9 0 16 7 16 16 0 12-10 21-22 28z' fill='%23FF5FA2'/%3E%3Cpath d='M22 20l4 6-3 1 5 8' stroke='%23FFE44D' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='42' cy='18' r='4' fill='%23FFE44D'/%3E%3C/svg%3E",
@@ -358,6 +358,46 @@
       "name": "업적 타임라인",
       "url": "./index.html#achievetimeline",
       "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FFD700'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📅%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "챌린지 룰렛",
+      "url": "./index.html#roulette",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF5FA2'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🎰%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "콤보 트리",
+      "url": "./index.html#combotree",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F44336'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E⚔%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "유대감 트래커",
+      "url": "./index.html#bondtracker",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E91E63'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E💕%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "파워업 진화",
+      "url": "./index.html#evopath",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239C27B0'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🔮%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "난이도 분석",
+      "url": "./index.html#diffanalyzer",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232196F3'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📊%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "전투력 예측",
+      "url": "./index.html#predictor",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF9800'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E⚔%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "감정 에너지",
+      "url": "./index.html#emotioncharge",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FFD700'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E⚡%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "스코어보드",
+      "url": "./index.html#scoreboard",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234CAF50'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🏆%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     }
   ]
 }
