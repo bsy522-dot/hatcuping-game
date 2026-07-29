@@ -1,7 +1,7 @@
 {
   "name": "사랑의 하츄핑",
   "short_name": "하츄핑",
-  "description": "사랑의 하츄핑 v24.0 - 플랫포머 액션 & 턴제 RPG & 오픈월드 & UNIFIED 통합판. 업적 226개, 모험가랭킹8종Canvas, 스킬트리12노드Canvas, 날씨전투8종Canvas, 시너지매트릭스6x6Canvas, 아이템대장간8종Canvas, 던전타임보드10층Canvas, 성격분석6축Canvas, 도감트래커8종Canvas, 퀴즈 240문!",
+  "description": "사랑의 하츄핑 v25.0 - 플랫포머 액션 & 턴제 RPG & 오픈월드 & UNIFIED 통합판. 업적 238개, 몬스터도감12종6축RadarCanvas, XP효율최적화10활동Canvas, 보스공격패턴8종Canvas, 드롭확률시뮬10x5Canvas, 파티빌더8캐릭Canvas, 스테이지히트맵5x8Canvas, 전투예측게이지Canvas, 모험일지캘린더30일Canvas, 퀴즈 255문!",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
@@ -9,7 +9,7 @@
   "theme_color": "#FF5FA2",
   "categories": ["games", "entertainment"],
   "lang": "ko",
-  "id": "hatcuping-game-v24",
+  "id": "hatcuping-game-v25",
   "icons": [
     {
       "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FFF0F8'/%3E%3Cpath d='M32 54C20 47 10 38 10 26c0-9 7-16 16-16 4 0 6 2 6 2s2-2 6-2c9 0 16 7 16 16 0 12-10 21-22 28z' fill='%23FF5FA2'/%3E%3Cpath d='M22 20l4 6-3 1 5 8' stroke='%23FFE44D' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='42' cy='18' r='4' fill='%23FFE44D'/%3E%3C/svg%3E",
@@ -438,6 +438,46 @@
       "name": "도감 트래커",
       "url": "./index.html#compendium",
       "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231ABC9C'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📚%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "몬스터 도감",
+      "url": "./index.html#monsterCodex",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E74C3C'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E👹%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "XP 효율 최적화",
+      "url": "./index.html#xpOptimizer",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232ECC71'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📈%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "보스 패턴 분석",
+      "url": "./index.html#bossPattern",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239B59B6'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🐉%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "드롭 확률 시뮬",
+      "url": "./index.html#dropSimulator",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F39C12'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🎲%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "파티 빌더",
+      "url": "./index.html#partyBuilder",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233498DB'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E👥%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "스테이지 히트맵",
+      "url": "./index.html#stageHeatmap",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E67E22'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🗺️%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "전투 예측 엔진",
+      "url": "./index.html#battlePredictor",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C0392B'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E⚔️%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "모험 일지",
+      "url": "./index.html#adventureJournal",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2316A085'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📅%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     }
   ]
 }
