@@ -1427,3 +1427,51 @@
 - `manifest.json`: id/description v24 갱신, shortcuts 8개 추가
 - `AUTO_REPORT.md`: v24.0 보고서 추가
 - **총 5파일 변경 (1파일 신규), ~1400줄 추가**
+
+---
+
+## [AUTO] 2026-08-05 hatcuping-game v27.0
+
+### Stage 1: 벤치마킹 (10%)
+- **슈퍼마리오** 대비: 캐릭터진화계보도(→8캐릭5단계Tree+성장곡선Canvas), 던전레이어탐험맵(→10층진행도+보물+보스Canvas), 아이템합성레시피트리(→10종4티어합성네트워크Canvas), 일일퀘스트보상추적기(→7일7퀘히트맵+완료율Canvas) 열위 해결
+- **포켓몬RPG** 대비: 전투속성상성매트릭스(→8x8타입효과2x/0.5x히트맵Canvas), 동료펫친밀도분석기(→8펫6축Radar+등급Canvas), 전투AI패턴러닝(→6보스8패턴빈도바+타임라인Canvas), 종합모험통계대시보드(→8KPI반원게이지종합등급Canvas) 열위 해결
+
+### Stage 2: 개발 (50%) - v27_patch.js IIFE ~1230줄
+| 기능 | 상세 | 기술 |
+|------|------|------|
+| 캐릭터 진화 계보도 | 8캐릭(로미/하츄핑/바로핑/해핑/차핑/아자핑/라라핑/무지핑) 5진화단계 트리다이어그램, 전투력성장곡선라인차트, 진화재료정보, S~C등급 | Canvas 620x400 |
+| 전투 속성 상성 매트릭스 | 8속성(불/물/풀/번개/얼음/땅/바람/빛) 8x8 상성히트맵, 2x효과적/1x보통/0.5x비효과적, 속성별공격효율요약 | Canvas 640x400 |
+| 던전 레이어 탐험 맵 | 10층(숲의입구~최종보스의방) 진행바, 몬스터/보물/보스/난이도표시, 클릭클리어, localStorage저장 | Canvas 620x400 |
+| 아이템 합성 레시피 트리 | 10종아이템 4티어(기본/고급/희귀/전설) 합성트리, 재료+결과+별등급 시각화 | Canvas 640x400 |
+| 일일 퀘스트 보상 추적기 | 7퀘스트x7일 히트맵캘린더, 완료체크토글, 일별완료율바차트 | Canvas 620x400 |
+| 동료 펫 친밀도 분석기 | 8펫(핑크냥이~불꽃도마뱀) 6축(공격/방어/속도/지능/충성/회복) Radar, 능력치바차트, 최강/약점능력, S~C등급 | Canvas 600x380 |
+| 전투 AI 패턴 러닝 | 6보스(그림자왕~바람군주) 8패턴 사용빈도바차트, 16턴전투타임라인시뮬레이션, 최다사용패턴분석 | Canvas 620x400 |
+| 종합 모험 통계 대시보드 | 8KPI(전투횟수/클리어스테이지/수집아이템/퀴즈정답률/업적달성률/동료친밀도/던전진행률/종합점수) 반원게이지 4x2, S~C등급, 종합등급 | Canvas 620x400 |
+
+- **SFX 18종**: evo_select, evo_evolve, type_scan, type_effect, dungeon_step, dungeon_clear, synth_click, synth_success, quest_check, quest_complete, pet_feed, pet_bond, ai_scan, ai_predict, dash_calc, dash_rank, v27_nav, v27_quiz
+- **퀴즈 +15문** (270→285)
+- **업적 +12개** (250→262)
+- **키보드 단축키**: Shift+Q/W/E/R/T/Y/U/I/9
+- **기존 네비바에 9버튼 append** (하단 네비바 신규생성 없음 - UI불가침 규칙 준수)
+
+### Stage 3: 품질검증 (30%)
+| 항목 | 결과 | 상세 |
+|------|------|------|
+| JS 문법 (node --check) | PASS | v27_patch.js 1230줄 파싱 완료 |
+| JSON 검증 (manifest.json) | PASS | 파싱 완료, shortcuts 108개 |
+| 외부 CDN 참조 | PASS | 0건 (규칙 준수) |
+| 개인정보 노출 | PASS | 0건 (규칙 준수) |
+| 하단 고정 네비바 신설 | PASS | 0건 (UI불가침 규칙 준수) |
+| IIFE 캡슐화 | PASS | 전역 오염 없음 |
+| Dark Mode 대응 | PASS | isDarkV27() 전 기능 적용 |
+| localStorage 사용 | PASS | v27 전용 키 사용 |
+| Web Audio API | PASS | 18종 SFX, 뮤트 지원 |
+
+### Stage 4: 배포 (10%)
+**변경 파일:**
+- `v27_patch.js`: 신규 (1230줄, 자기완결형 IIFE 패치 모듈)
+- `index.html`: 메타태그/title/JSON-LD/keywords v27 갱신, v27 script 태그 추가
+- `sw.js`: 캐시명 hatcuping-v26→hatcuping-v27, PRECACHE_URLS에 v27_patch.js 추가
+- `manifest.json`: id/description v27 갱신, shortcuts 8개 추가 (100→108)
+- `AUTO_REPORT.md`: v27.0 보고서 추가
+- **총 5파일 변경 (1파일 신규), ~1230줄 추가**
