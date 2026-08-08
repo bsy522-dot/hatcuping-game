@@ -1,7 +1,7 @@
 {
   "name": "사랑의 하츄핑",
   "short_name": "하츄핑",
-  "description": "사랑의 하츄핑 v27.0 - 플랫포머 액션 & 턴제 RPG & 오픈월드 & UNIFIED 통합판. 업적 262개, 캐릭터진화계보도8캐릭5단계TreeCanvas, 전투속성상성매트릭스8x8Canvas, 던전레이어탐험맵10층Canvas, 아이템합성레시피트리10종4티어Canvas, 일일퀘스트보상추적기7일7퀘Canvas, 동료펫친밀도분석기8펫6축RadarCanvas, 전투AI패턴러닝6보스8패턴Canvas, 종합모험통계대시보드8KPI반원게이지Canvas, 퀴즈 285문!",
+  "description": "사랑의 하츄핑 v28.0 - 플랫포머 액션 & 턴제 RPG & 오픈월드 & UNIFIED 통합판. 업적 274개, 캐릭터재능트리8캐릭6스킬Canvas, 계절전투시스템4계절8효과히트맵Canvas, 길드시스템6길드네트워크Canvas, 룬인챈트12룬4등급Canvas, 탈것도감10종5축RadarCanvas, 아레나토너먼트8강대진표Canvas, 제작레시피북15종바차트Canvas, 종합성장대시보드8KPI반원게이지Canvas, 퀴즈 300문!",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
@@ -9,7 +9,7 @@
   "theme_color": "#FF5FA2",
   "categories": ["games", "entertainment"],
   "lang": "ko",
-  "id": "hatcuping-game-v27",
+  "id": "hatcuping-game-v28",
   "icons": [
     {
       "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FFF0F8'/%3E%3Cpath d='M32 54C20 47 10 38 10 26c0-9 7-16 16-16 4 0 6 2 6 2s2-2 6-2c9 0 16 7 16 16 0 12-10 21-22 28z' fill='%23FF5FA2'/%3E%3Cpath d='M22 20l4 6-3 1 5 8' stroke='%23FFE44D' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='42' cy='18' r='4' fill='%23FFE44D'/%3E%3C/svg%3E",
@@ -558,6 +558,46 @@
       "name": "종합 모험 통계 대시보드",
       "url": "./index.html#adventureDash",
       "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239C27B0'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📊%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "캐릭터 재능 트리",
+      "url": "./index.html#talentTree",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234CAF50'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🌳%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "계절전투 시스템",
+      "url": "./index.html#seasonBattle",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2366BB6A'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🍃%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "길드 시스템",
+      "url": "./index.html#guildSystem",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23795548'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🏰%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "룬 인챈트 시스템",
+      "url": "./index.html#runeSystem",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239C27B0'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🔮%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "탈것 도감",
+      "url": "./index.html#mountCollection",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF9800'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🐴%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "아레나 토너먼트",
+      "url": "./index.html#arenaTournament",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f44336'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E⚔️%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "제작 레시피북",
+      "url": "./index.html#recipeBook",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF5722'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📖%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
+    },
+    {
+      "name": "종합 성장 대시보드",
+      "url": "./index.html#growthDash",
+      "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233F51B5'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E📈%3C/text%3E%3C/svg%3E","sizes":"32x32","type":"image/svg+xml"}]
     }
   ]
 }
